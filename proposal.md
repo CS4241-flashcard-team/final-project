@@ -32,4 +32,4 @@ Khuyen Cao, Quyen Hoang, Hung Hong, Hannah Jauris
 - If we were to initiate the “match a list of name to a list of pictures” variation, the card can be dragged and drop into place.
 
 ## What we are planning to use:
-HTML, CSS, Bootstrap, AJAX, JavaScript, jQuery
+HTML, CSS, Bootstrap, AJAX, JavaScript, jQuery, Postgres
