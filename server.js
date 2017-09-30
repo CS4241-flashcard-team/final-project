@@ -3,6 +3,9 @@ var http = require('http')
   , url  = require('url')
   , port = 8080;
 
+var pg = require('pg');
+var dbURL = "postgres://vzubeyfkqoywib:e586ac21dd40862bc90e9d3106d784699ffd47b1b5fb19f13c345ea30da069e4@ec2-54-225-236-102.compute-1.amazonaws.com:5432/d3fj7m875fjgja?ssl=true";
+
 var server = http.createServer (function (req, res) {
   var uri = url.parse(req.url)
 

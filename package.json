@@ -8,5 +8,6 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "pg": "^7.3.0"
   }
 }
