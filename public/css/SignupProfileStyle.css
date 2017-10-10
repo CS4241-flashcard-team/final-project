@@ -1,0 +1,11 @@
+img{
+	width: 250px;
+	height: 250px;
+	object-fit:cover;
+	
+}
+.body{
+	padding-bottom: 5%;
+	margin: auto;
+	width: 75%;
+}

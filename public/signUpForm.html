@@ -1,63 +1,70 @@
 <html lang="en">
   <head>
     <title>Game of Faces: Sign-Up</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/SignupProfileStyle.css">
     <meta charset="utf-8">
-	<style>
-	#profile{
-		width: 250px;
-		height: 250px;
-		object-fit:cover;
-	}
-	
-	</style>
-	
+
   </head>
   <body>
-	<script type="text/javascript" src="js/SignUpscripts.js"></script>
-	<h1>Sign Up for Game of Faces</h1>
-	
-	<form id="signup" method="POST">
-	
-	<!--picture upload-->
-	
-	<img id="profile" src="#" alt="Profile Picture Preview"><br>
-	<label>Image: Please upload a picture of yourself!</label><br>
-	<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)"/>
-	<br>
-	
-	<!--username--check to make sure it is not already taken-->
-	<label>Username:</label>
-	<input type="text" name="username" required/>
-	<br>
-	
-	<label>Password:</label>
-	<input type="password" name="password" required/>
-	<br>
-	
-	<label>Confirm Password:</label>
-	<input type="password" name="passwordConfirm" required/>
-	<br>
-	
-	<!--name-->
-	<label>First Name:</label>
-	<input type="text" name="first" required/>
-	<br>
-	
-	<label>Last Name:</label>
-	<input type="text" name="last" required/>
-	<br>
-	
-	<!--account type-->
-	<label>Account type:</label><br>
-	<input type="radio" name="accountType" value="Student" checked>Student<br>
-	<input type="radio" name="accountType" value="Teacher">Teacher<br>
-	
-	<br>
-	<button type="submit" name="submit">Submit</button>
-	
-	</form>
- 
+	<script type="text/javascript" src="scripts.js"></script>
+	<div class = "body">
+		<h1>Sign Up for Game of Faces</h1>
+		
+		<div>
+			<form id="signup" method="POST">
+			
+			<!--picture upload-->
+			
+			<img id="profile" src="#" alt="Profile Picture Preview"><br>
+			<label>Image: Please upload a picture of yourself!</label><br>
+			<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)"/>
+			<br>
+			
+			<!--username--check to make sure it is not already taken-->
+			<label>Username:</label>
+			<input type="text" name="username" required/>
+			<br>
+			
+			<label>Password:</label>
+			<input type="password" name="password" required/>
+			<br>
+			
+			<label>Confirm Password:</label>
+			<input type="password" name="passwordConfirm" required/>
+			<br>
+			
+			<!--name-->
+			<label>First Name:</label>
+			<input type="text" name="first" required/>
+			<br>
+			
+			<label>Last Name:</label>
+			<input type="text" name="last" required/>
+			<br>
+			
+			<!--account type-->
+			<label>Account type:</label><br>
+			<input type="radio" name="accountType" value="Student" checked>Student<br>
+			<input type="radio" name="accountType" value="Teacher">Teacher<br>
+			
+			<br>
+			<button type="submit" name="submit">Submit</button>
+			
+			</form>
+		</div>
+	</div>
+	<footer class="container-fluid text-center">
+	<div id="footer1">
+		<p>Designed by: Khuyen Cao, Quyen Hoang, Hung Hong, Hannah Jauris</p>
+		<p>09-31-2017</p>
+	</div>
+	<div id="footer2"><p> Final Project - CS4241 </p></div>
+	</footer>
  
   </body>
 </html>

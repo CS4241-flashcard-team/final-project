@@ -1,0 +1,81 @@
+<html lang="en">
+  <head>
+    <title>Game of Faces Profile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="css/SignupProfileStyle.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="utf-8">
+	
+  </head>
+  <body>
+	<script type="text/javascript" src="SignUpscripts.js"></script>
+	<div class = "body">
+		<h1>Game of Faces: Your Profile</h1>
+		
+		<div>
+		<h2>Your Information</h2>
+		<img id="profileImg" src="<get pic from database>" alt="Profile Picture"><br>
+		<p>Your username is: <span id="uname">Username Here</span></p>
+		<p>Your name is: <span id="first">Firstname</span> <span id="last">Lastname</span></p>
+		<p>Your account type is: <span id="acctType">Student/Teacher</span></p>
+		</div>
+		
+		<div>
+			<h2>Update Your Information Below:</h2>
+			<form id="updatePwd" method="POST">
+			<h3>Change Password:</h3>
+			<label>Old Password:</label>
+			<input type="password" name="password" required/>
+			<br>
+			
+			<label>New Password:</label>
+			<input type="password" name="password" required/>
+			<br>
+			
+			<label>Confirm New Password:</label>
+			<input type="password" name="passwordConfirm" required/>
+			<br>
+			<button type="submit" name="submit">Change Password</button>
+			</form>
+			
+			<form id="updateName" method="POST">
+			<h3>Change Name:</h3>
+			<!--name-->
+			<label>First Name:</label>
+			<input type="text" name="first" required/>
+			<br>
+			
+			<label>Last Name:</label>
+			<input type="text" name="last" required/>
+			<br>
+			
+			<button type="submit" name="submit">Change Name</button>
+			
+			</form>
+			
+			<form id="updatePic" method="POST">
+			
+			<!--picture upload-->
+			<h3>Update your profile picture:</h3>
+			<img id="profile" src="#" alt="Profile Picture Preview"><br>
+			
+			<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)"/>
+			<br>
+			<button type="submit" name="submit">Change Picture</button>
+			</form>
+		</div>
+	<div>
+	<footer class="container-fluid text-center">
+	<div id="footer1">
+		<p>Designed by: Khuyen Cao, Quyen Hoang, Hung Hong, Hannah Jauris</p>
+		<p>09-31-2017</p>
+	</div>
+	<div id="footer2"><p> Final Project - CS4241 </p></div>
+	</footer>
+ 
+ 
+  </body>
+</html>
