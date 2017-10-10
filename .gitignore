@@ -49,3 +49,6 @@ jspm_packages
 
 # Intellij Idea
 *.idea
+
+# Environment
+.env
