@@ -21,7 +21,13 @@
             color: white;
         }
         h2{
-            margin-top: 40px;
+            display: block;
+            width: 50%;
+            font-size: 50px;
+            padding-bottom: 40x;
+            padding-top: 40px;
+            margin: auto;
+            text-align: center;
         }
         h3{
             display: block;
@@ -31,6 +37,30 @@
             margin: auto;
             border-radius: 12px;
             text-align: center;
+        }
+        #result_table{
+            width: 60%;
+            margin: auto;
+            margin-bottom: 50px;
+            border: 3px solid;
+        }
+
+        #result_table th, #result_table td {
+            text-align: left; /* Left-align text */
+            padding: 12px; /* Add padding */
+        }
+
+        #result_table tr {
+        /* Add a bottom border to all table rows */
+            border-bottom: 1px solid #ddd; 
+        }
+
+        #result_table tr.header, #result_table tr:hover {
+            background-color: #a0a0a0;
+        }
+
+        #result_table tr:hover{
+            background-color: #e0e0e0;
         }
     </style>
 
@@ -80,8 +110,8 @@
     </div>
     <div id="result_screen" hidden>
         <h2>RESULT</h2>
-        <table id="result_table" style="width:100%">
-            <tr>
+        <table id="result_table">
+            <tr class="header">
                 <th>Question Number</th>
                 <th>Image</th>
                 <th>Correct Answer</th>
@@ -148,7 +178,6 @@
                 <td id="ya10"></td>
             </tr>
         </table>
-        <button id="back_result">Back to Menu</button>
     </div>
     <script src="js/game.js"></script>
 </body>
