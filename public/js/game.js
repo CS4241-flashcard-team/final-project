@@ -1,27 +1,88 @@
 // Example questions to test the code without database
-var question1 = {
-    answer: "pikachu",
-    img: "https://i.ytimg.com/vi/iYyDbVUWgTI/hqdefault.jpg",
-    choices: ["pikachu", "squirtle", "charmander", "bulbasaur"]
-};
-var question2 = {
-    answer: "android",
-    img: "http://www.jrtstudio.com/sites/default/files/ico_android.png",
-    choices: ["android", "apple", "windows", "blackberry"]
-};
-var question3 = {
-    answer: "25 / 5",
-    img: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Dice-5.png",
-    choices: ["1 + 3", "10 * 10", "25 / 5", "9 - 6"]
-};
+// var question1 = {
+//     answer: "pikachu",
+//     img: "https://i.ytimg.com/vi/iYyDbVUWgTI/hqdefault.jpg",
+//     choices: ["pikachu", "squirtle", "charmander", "bulbasaur"]
+// };
+// var question2 = {
+//     answer: "android",
+//     img: "http://www.jrtstudio.com/sites/default/files/ico_android.png",
+//     choices: ["android", "apple", "windows", "blackberry"]
+// };
+// var question3 = {
+//     answer: "25 / 5",
+//     img: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Dice-5.png",
+//     choices: ["1 + 3", "10 * 10", "25 / 5", "9 - 6"]
+// };
 
 // Array of question - change it later
-var aoq = [question1, question2, question3];
+var aoq = [];
+// Array of students
+var aos = [];
 
 // Variable to keep
-var choice = [maxQuestion];
+var choice = [];
 var currentQuestion = 0;
-var maxQuestion = 3; // Update this to 10 later when everything works
+var questionSize = 10;
+const maxQuestion = 10; // Update this to 10 later when everything works
+
+
+// Get the list of students in current course
+function getStudentList() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=student", true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            buildStudentsList(this.response);
+            // Add event listeners to elements of page
+            document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
+            document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
+        }
+    };
+    xhr.send();
+}
+getStudentList();
+
+// Generate array of questions base on student list
+function prepareArrayOfQuestions() {
+    aoq = [];
+    var temp = shuffleArray(aos);
+    for (var i = 0; i < questionSize; i++) {
+        var tempq = {answer: "", img: "", choices: []};
+        tempq.answer = temp[i].fname + " " + temp[i].lname;
+        tempq.img = temp[i].img;
+        tempq.choices[0] = temp[i].fname + " " + temp[i].lname;
+
+        var count = 0;
+        for (var j = 0; j < questionSize; j++) {
+            if (temp[j].fname + " " + temp[j].lname !== tempq.answer) {
+                count++;
+                //console.log(temp_choice[j]);
+                tempq.choices[count] = temp[j].fname + " " + temp[j].lname;
+            }
+            if (count === 3) break;
+        }
+        aoq[i] = tempq;
+        console.log(aoq);
+    }
+}
+
+// Pass student list into our array
+function buildStudentsList(list) {
+    for (var i = 0; i < list.length; i++) {
+        var student = {name: "", fname: "", lname: "", img: ""};
+        student.name = list[i].username;
+        student.fname = list[i].firstname;
+        student.lname = list[i].lastname;
+        student.img = "https://s3.amazonaws.com/cs4241-fp/" + list[i].picname;
+        aos[i] = student;
+    }
+    if (list.length > maxQuestion) {
+        questionSize = maxQuestion;
+    } else questionSize = list.length
+    prepareArrayOfQuestions();
+}
 
 // Prepare question from the struct 'question' passed in
 // Update image, question choices accordingly
@@ -84,14 +145,16 @@ function analyzeChoice() {
     choice[currentQuestion] = (aoq[currentQuestion].answer === ans);
 
     // Update to next question
-    if (currentQuestion < maxQuestion - 1) {
+    if (currentQuestion < questionSize) {
         currentQuestion++;
-        prepareQuestion(aoq[currentQuestion]);
-        clearTimeout(timeoutHandle);
-        countdown();
-    } else if (currentQuestion === maxQuestion - 1) {
-        clearTimeout(timeoutHandle);
-        displayResult();
+        if (currentQuestion === questionSize) {
+            clearTimeout(timeoutHandle);
+            displayResult();
+        } else {
+            prepareQuestion(aoq[currentQuestion]);
+            clearTimeout(timeoutHandle);
+            countdown();
+        }
     }
 }
 
@@ -105,7 +168,7 @@ function displayResult() {
     document.getElementById("game_zone").style.display = "none";
 
     // Insert result into table
-    for (i = 0; i < maxQuestion; i++) {
+    for (i = 0; i < questionSize; i++) {
         document.getElementById("img"+(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />"
         document.getElementById("ca"+ (i+1).toString()).innerHTML = aoq[i].answer;
         document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
@@ -124,22 +187,20 @@ function countdown() {
         }
         if (seconds === 0) {
             choice[currentQuestion] = false;
-            if (currentQuestion < maxQuestion - 1) {
+            if (currentQuestion < questionSize) {
                 currentQuestion++;
-                prepareQuestion(aoq[currentQuestion]);
-                clearTimeout(timeoutHandle);
-                countdown();
-            } else if (currentQuestion === maxQuestion - 1) {
-                clearTimeout(timeoutHandle);
-                displayResult();
+                if (currentQuestion === questionSize) {
+                    clearTimeout(timeoutHandle);
+                    displayResult();
+                } else {
+                    prepareQuestion(aoq[currentQuestion]);
+                    clearTimeout(timeoutHandle);
+                    countdown();
+                }
             }
+
         }
     }
     tick();
 }
 countdown();
-
-
-// Add event listeners to elements of page
-document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
-document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
