@@ -117,6 +117,9 @@ var server = http.createServer(function (req, res) {
         case '/js/game.js':
             sendFile(res, 'public/js/game.js', 'text/javascript')
             break
+        case '/js/dashboard.js':
+            sendFile(res, 'public/js/dashboard.js', 'text/javascript')
+            break
         default:
             res.end('404 not found')
     }

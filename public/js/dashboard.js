@@ -1,14 +1,74 @@
-function getCourse() {
+function joinCourse(){
+    const data = {
+        target: 'addCourse',
+        courseCode: document.getElementById('selectCourse').value,
+        // username: document.getElementById('my-username').value
+    };
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=coursesByUsername&username=taylorSwift", true);
+    xhr.open("POST", "/post", true);
+    xhr.onload = function() {
+        if (this.status === 400) {
+            console.log(this.response.message);
+        }
+
+        if (this.status === 200) {
+            console.log('yay');
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
+
+function createCourse(){
+    const data = {
+        target: 'addCourse',
+        courseCode: document.getElementById('my-code').value,
+        username: document.getElementById('my-username').value
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("POST", "/post", true);
+    xhr.onload = function() {
+        if (this.status === 400) {
+            console.log(this.response.message);
+        }
+
+        if (this.status === 200) {
+            console.log('yay');
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
+
+function getAllCourses() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=courses", true);
     xhr.onload = function() {
         if (this.status === 200) {
-            buildProfList(this.response);
+            buildCourseJoin(this.response);
         }
     };
     xhr.send();
 }
+
+function getUserCourses() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=coursesByUsername&username=my-username", true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            buildFolder(this.response);
+        }
+    };
+    xhr.send();
+}
+
+var templateCourse = _.template(
+    '<option>' +
+    '<%= code %>' +
+    '</option>' 
+);
 
 var template = _.template(
     '<div class="col-sm-3">' +
@@ -38,12 +98,24 @@ var template = _.template(
     '</div>'+
 
     '</div>'
-);
+); 
 
-function buildCourseList(list) {
+function buildCourseJoin(list) {
+    console.log("here");
+    var i, toAppendString = "";
+    for (i = 0; i < list.length; i++) {
+        toAppendString += templateCourse(list[i]);
+    }
+    document.querySelector("#selectCourse").innerHTML = toAppendString;
+}
+
+function buildFolder(list) {
+    console.log("here");
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
         toAppendString += template(list[i]);
     }
+    console.log(toAppendString);
     document.querySelector("#courseRow").innerHTML = toAppendString;
+    console.log(document.querySelector("#courseRow"))
 }
