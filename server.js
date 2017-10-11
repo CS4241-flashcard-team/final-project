@@ -106,9 +106,9 @@ function upperFirstLet(str) {
 }
 
 function getUserByCourse(res, uri) {
-    var client = new pg.Client(dbURL);
-    var courseCode = qs.parse(uri.query).courseCode;
-    var filter = qs.parse(uri.query).filter;
+    const client = new pg.Client(dbURL);
+    const courseCode = qs.parse(uri.query).courseCode;
+    const filter = qs.parse(uri.query).filter;
     var query = "SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username";
 
     if (typeof courseCode === 'undefined') {

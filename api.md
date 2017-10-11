@@ -27,3 +27,9 @@
 
 
 # POST
+## Professor adds new course
+
+## Student joins a course
+
+
+# S3
