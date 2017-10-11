@@ -49,6 +49,9 @@ var server = http.createServer(function (req, res) {
             });
             req.on('end', function () {
                 var data = JSON.parse(postData);
+                if (data.target === 'logIn') {
+                    logIn(res, data.username, data.password);
+                }
                 if (data.target === 'addCourse') {
                     addToCoursesDb(res, data.courseCode, data.name);
                     addToEnrollmentsDb(res, data.courseCode, data.username);
@@ -245,8 +248,30 @@ function getUsers(res, uri) {
     });
 }
 
+function logIn(res, username, password) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed')
+            console.error(err);
+        } else {
+            const query = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end();
+                }
+            });
+        }
+    });
+}
+
 function addToCoursesDb(res, courseCode, name) {
-    var client = new pg.Client(dbURL);
+    const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
             console.log('Connect to db failed')
@@ -268,7 +293,7 @@ function addToCoursesDb(res, courseCode, name) {
 }
 
 function addToEnrollmentsDb(res, courseCode, username) {
-    var client = new pg.Client(dbURL);
+    const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
             console.log('Connect to db failed')
