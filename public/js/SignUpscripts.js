@@ -41,11 +41,11 @@ function getProfileInfo(){
     xhr.onload = function() {
         if (this.status === 200) {
             console.log(this.response);
-			document.getElementById("uname").innerText = this.response.username;
-			document.getElementById("first").innerText = this.response.firstname;
-			document.getElementById("last").innerText = this.response.lastname;
-			document.getElementById("profileImg").src = this.response.picname;
-			document.getElementById("acctType").innerText = this.response.acctype;
+			document.getElementById("uname").innerText = this.response[0].username;
+			document.getElementById("first").innerText = this.response[0].firstname;
+			document.getElementById("last").innerText = this.response[0].lastname;
+			document.getElementById("profileImg").src = "https://s3.amazonaws.com/cs4241-fp/"+this.response[0].picname;
+			document.getElementById("acctType").innerText = this.response[0].acctype;
         }
     };
     xhr.send();
