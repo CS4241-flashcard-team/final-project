@@ -9,13 +9,27 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/SignupProfileStyle.css">
-    <meta charset="utf-8">
+	<meta charset="utf-8">
+	
+	<style>
+			h1{
+				font-size: 80px;
+				color: white;
+				margin: 0px;
+			}
+
+			#sideNav, #content{
+      		padding: 0px;
+   		 	}
+
+	</style>
 
   </head>
   <body>
 	<script type="text/javascript" src="js/SignUpscripts.js"></script>
-	<div class="container-fluid">
-		<div class = "col-sm-1 text-left">
+	<h1>Sign Up for Game of Faces</h1>
+	<div id="content" class="container-fluid">
+		<div id = "sideNav" class = "col-sm-1 text-left">
 		<ul class = "nav nav-pills nav-stacked sidenav">
 		<li><a href="profilePage.html">Your Profile</a></li>
 		<li class="active"><a href="#">Sign Up</a></li>
@@ -28,7 +42,6 @@
 		<div class = "col-sm-1"></div>
 		
 		<div class = "col-sm-8 center-block text-center">
-		<h1>Sign Up for Game of Faces</h1>
 		
 		<div class="body">
 			<form id="signup" method="POST">
@@ -37,7 +50,7 @@
 			<div class="form-group">
 			<img id="profile" src="#" alt="Profile Picture Preview"><br>
 			<p>Image: Please upload a picture of yourself!<p><br>
-			<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)"/>
+			<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)" required/>
 			</div>
 			
 			<!--username--check to make sure it is not already taken-->

@@ -3,79 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Testing for game_mod1.js</title>
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="css/gameStyle.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-    <style>
-        body {
-        font-family: "Roboto Slab", "Dosis", sans-serif;
-        }
-        h1{
-            font-size: 80px;
-            color: white;
-        }
-        h2{
-            display: block;
-            width: 50%;
-            font-size: 50px;
-            padding-bottom: 40x;
-            padding-top: 40px;
-            margin: auto;
-            text-align: center;
-        }
-        h3{
-            display: block;
-            background-color: rgb(0, 190, 0);
-            width: 17%;
-            padding: 20px;
-            margin: auto;
-            border-radius: 12px;
-            text-align: center;
-        }
-        #result_table{
-            width: 60%;
-            margin: auto;
-            margin-bottom: 50px;
-            border: 3px solid;
-        }
-
-        #result_table th, #result_table td {
-            text-align: left; /* Left-align text */
-            padding: 12px; /* Add padding */
-        }
-
-        #result_table tr {
-        /* Add a bottom border to all table rows */
-            border-bottom: 1px solid #ddd; 
-        }
-
-        #result_table tr.header, #result_table tr:hover {
-            background-color: #a0a0a0;
-        }
-
-        #result_table tr:hover{
-            background-color: #e0e0e0;
-        }
-    </style>
-
+    <script scr="js/game.js"></script>
 
 </head>
-<body>
-    <div id="gameName">
-        <h1><button type="button" id="backBtn" onclick="location.href='/dashboard.html'" class="btn btn-primary btn-lg" >
-              <span class="glyphicon glyphicon-menu-left"></span> Back
-        </button> Game of Faces</h1>
-    </div>  
-
+<body onload="initGame()">
     <div id="game_element">
         <h2>Question No. <span id="qnum"></span></h2>
-        <h3>Time left is: <span id="timer">20</span></h3>
+        <h2>Time left is: <span id="timer">20</span></h2>
+        <button id="back_game">Back to Menu</button>
     </div>
     <div id="game_zone">
         <div id="img_container">
@@ -103,15 +38,13 @@
                     <label id="l4" for="c4"></label>
                 </div>
             </form>
-            <button type="button" id="nextbtn" class="btn btn-primary">
-                    Next question<br/><span class="glyphicon glyphicon-arrow-right"></span>
-            </button>
+            <button id="nextbtn">Next</button>
         </div>
     </div>
     <div id="result_screen" hidden>
         <h2>RESULT</h2>
-        <table id="result_table">
-            <tr class="header">
+        <table id="result_table" style="width:100%">
+            <tr>
                 <th>Question Number</th>
                 <th>Image</th>
                 <th>Correct Answer</th>
@@ -178,7 +111,7 @@
                 <td id="ya10"></td>
             </tr>
         </table>
+        <button id="back_result">Back to Menu</button>
     </div>
-    <script src="js/game.js"></script>
 </body>
 </html>
