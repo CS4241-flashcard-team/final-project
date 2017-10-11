@@ -12,8 +12,8 @@
     <meta charset="utf-8">
 	
   </head>
+  <script type="text/javascript" src="js/SignUpscripts.js"></script>
   <body onload="getProfileInfo()">
-	<script type="text/javascript" src="js/SignUpscripts.js"></script>
 	<div class="container-fluid">
 		<div class = "col-sm-1 text-left">
 		<ul class = "nav nav-pills nav-stacked sidenav">
@@ -29,7 +29,7 @@
 	
 		<div class = "col-sm-8 center-block text-center">
 			<h1>Game of Faces: Your Profile</h1>
-			
+			<div class= "body">
 			<div>
 			<h2>Your Information</h2>
 			<img id="profileImg" src="<get pic from database>" alt="Profile Picture"><br>
@@ -54,7 +54,7 @@
 					<label>Confirm New Password:</label>
 					<input type="password" class="form-control" name="passwordConfirm" required/>
 					<br>
-					<button type="submit" class="btn-default" name="submit">Update Password</button>
+					<button type="submit" class="btn btn-default" name="submit">Update Password</button>
 					</form>
 				</div>
 				
@@ -70,7 +70,7 @@
 					<input type="text" class="form-control" name="last" required/>
 					<br>
 					
-					<button type="submit" class="btn-default" name="submit">Update Name</button>
+					<button type="submit" class="btn btn-default" name="submit">Update Name</button>
 					
 					</form>
 				</div>
@@ -82,12 +82,13 @@
 					
 					<input type = "file" name="picture" id="profPic" accept=".png, .jpg, .jpeg" onchange="updatePic(event)"/>
 					<br>
-					<button type="submit" class="btn-default" name="submit">Update Picture</button>
+					<button type="submit" class="btn btn-default" name="submit">Update Picture</button>
 					</form>
 				</div>
 			</div>
+			</div>
 		</div>
-		<div class = "col-sm-2" </div>
+		<div class="col-sm-2"> </div>
 	</div><!--container-->
  
   </body>
