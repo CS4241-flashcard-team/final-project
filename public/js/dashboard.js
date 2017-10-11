@@ -119,3 +119,8 @@ function buildFolder(list) {
     document.querySelector("#courseRow").innerHTML = toAppendString;
     console.log(document.querySelector("#courseRow"))
 }
+
+function signOut(){
+    console.log('signing out');
+    window.location.href = "index.html";
+}
