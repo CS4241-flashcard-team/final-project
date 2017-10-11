@@ -43,8 +43,8 @@
 - **Optional params**:
 - **Example**:
     - const data = {
-        target: 'addCourse',
-        username: 'my-username,
+        target: 'logIn',
+        username: 'my-username',
         password: 'my-password'
     };
     - /post

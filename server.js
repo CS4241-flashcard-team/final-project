@@ -91,6 +91,9 @@ var server = http.createServer(function (req, res) {
         case '/js/scripts.js':
             sendFile(res, 'public/js/scripts.js', 'text/javascript')
             break
+        case '/js/index.js':
+            sendFile(res, 'public/js/index.js', 'text/javascript')
+            break
         case '/js/SignUpscripts.js':
             sendFile(res, 'public/js/SignUpscripts.js', 'text/javascript')
             break
@@ -262,12 +265,12 @@ function logIn(res, username, password) {
                     res.writeHead(500, {"Content-type": "text/plain"});
                     res.end(JSON.stringify({message: upperFirstLet(err.message)}));
                 } else {
-                    console.log(result.rows);
-                    if (result.rows.password === password) {
+                    const response = JSON.parse(JSON.stringify(result.rows[0]));
+                    if (response.password === password) {
                         res.writeHead(200, {"Content-type": "application/json"});
                         res.end();
                     } else {
-                        res.writeHead(500, {"Content-type": "text/plain"});
+                        res.writeHead(400, {"Content-type": "text/plain"});
                         res.end(JSON.stringify({message: upperFirstLet("Wrong username or password")}));
                     }
                 }

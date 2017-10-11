@@ -1,14 +1,23 @@
-// function logIn(){
-//     var xhr = new XMLHttpRequest();
-//     xhr.responseType = "json";
-//     xhr.open("GET", "/get?target=userByCourseCode&courseCode=MU-101-A17&filter=professor", true);
-//     xhr.onload = function() {
-//         if (this.status === 200) {
-//             validateUser();
-//         }
-//     };
-//     xhr.send();
-// }
+function logIn(){
+    const data = {
+        target: 'logIn',
+        username: document.getElementById('userName').value,
+        password: document.getElementById('password').value
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("POST", "/post", true);
+    xhr.onload = function() {
+        if (this.status === 400) {
+            console.log(this.response.message);
+        }
+
+        if (this.status === 200) {
+            console.log('yay');
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
 
 // function validateUser(){
 //     var userName = document.getElementById('userName');
