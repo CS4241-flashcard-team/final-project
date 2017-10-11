@@ -50,6 +50,48 @@
     - /post
     - xhr.send(JSON.stringify(data))
 
+## New user
+- **Required params**:
+    - target: newUser
+    - username: ...
+    - password: ...
+    - firstname: ...
+    - lastname: ...
+    - picname: ...
+    - acctype: ...
+- **Optional params**:
+- **Example**:
+    - const data = {
+        target: 'newUser',
+        username: 'my-username',
+        password: 'my-password',
+        firstname: 'my-firstname',
+        lastname: 'my-lastname',
+        picname: 'my-username.jpg',
+        acctype: 'student'
+    };
+    - /post
+    - xhr.send(JSON.stringify(data))
+
+## Update user
+- **Required params**:
+    - target: updateUser
+    - username: ...
+- **Optional params**:
+    - password: ...
+    - firstname: ...
+    - lastname: ...
+    - picname: ...
+    - acctype: ...
+- **Example**:
+    - const data = {
+        target: 'updateUser',
+        username: 'my-username',
+        password: 'new-password'
+    };
+    - /post
+    - xhr.send(JSON.stringify(data))
+
 ## Professor adds new course
 - **Required params**:
     - target: addCourse
