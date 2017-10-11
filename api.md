@@ -1,15 +1,23 @@
 # GET
-## All courses
+## Courses
 - **Required field**:
     - target: courses
 - **Optional field**:
-    - filter: username -> returns all courses associated with that username
+    - courseCode: ...
 - **Example**:
-    - /get?target=courses&filter=my-username
+    - /get?target=courses&courseCode=my-code
 
-## Users by course
+## Courses by username
 - **Required field**:
-    - target: userByCourse
+    - target: courseByUsername
+    - username: ...
+- **Optional field**:
+- **Example**:
+    - /get?target=courses&username=my-username
+
+## Users by courseCode
+- **Required field**:
+    - target: userByCourseCode
     - courseCode: ...
 - **Optional field**:
     - filter: student -> returns all students in that course
@@ -17,11 +25,11 @@
 - **Example**:
     - /get?target=userByCourse&courseCode=my-code&filter=professor
 
-## User by username
+## Users
 - **Required field**:
     - target: userByUsername
-    - username: ...
 - **Optional field**:
+    - username: ...
 - **Example**:
     - /get?target=userByUsername&username=my-username
 

@@ -6,7 +6,7 @@ function initCatalog() {
 function getProf() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=userByCourse&courseCode=MU-101-A17&filter=professor", true);
+    xhr.open("GET", "/get?target=userByCourseCode&courseCode=MU-101-A17&filter=professor", true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildProfList(this.response);
@@ -18,7 +18,7 @@ function getProf() {
 function getAllStudents() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=userByCourse&courseCode=MU-101-A17&filter=student", true);
+    xhr.open("GET", "/get?target=userByCourseCode&courseCode=MU-101-A17&filter=student", true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildStudentsList(this.response);

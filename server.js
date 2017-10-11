@@ -2,7 +2,7 @@ var http = require('http')
     , qs = require('querystring')
     , fs = require('fs')
     , url = require('url')
-    , port = 8080;
+    , port = process.env.PORT || 8080;
 
 // database
 const pg = require('pg');
@@ -24,11 +24,17 @@ var server = http.createServer(function (req, res) {
             break;
         case '/get':
             const target = qs.parse(uri.query).target;
-            if (target === 'userByCourse') {
-                getUserByCourse(res, uri);
+            if (target === 'courseByCourseCode') {
+                getCourses(res, uri);
+            }
+            if (target === 'courseByUsername') {
+                getCourseByUsername(res, uri);
+            }
+            if (target === 'userByCourseCode') {
+                getUserByCourseCode(res, uri);
             }
             if (target === 'userByUsername') {
-                getUserByUsername(res, uri);
+                getUsers(res, uri);
             }
             break;
         case '/post':
@@ -92,8 +98,8 @@ var server = http.createServer(function (req, res) {
     }
 })
 
-server.listen(process.env.PORT || port);
-console.log('listening on 8080');
+server.listen(port);
+console.log('listening on ' + port);
 
 function upperFirstLet(str) {
     var words = str.replace(/^\s+|\s+$/g, "").toLowerCase().split(' '); // remove leading and trailing space
@@ -105,11 +111,73 @@ function upperFirstLet(str) {
     return words.join(' ');
 }
 
-function getUserByCourse(res, uri) {
+function getCourses(res, uri) {
+    const client = new pg.Client(dbURL);
+    const courseCode = qs.parse(uri.query).courseCode;
+
+    var query = "SELECT * FROM courses";
+    if (courseCode) {
+        query += ` WHERE code=${courseCode}`;
+    }
+    query += ";";
+
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed');
+            console.error(err);
+        } else {
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    console.error("all query failed", err);
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end(JSON.stringify(result.rows));
+                }
+            });
+        }
+    });
+}
+
+function getCourseByUsername(res, uri) {
+    const client = new pg.Client(dbURL);
+    const username = qs.parse(uri.query).username;
+
+    if (typeof username === 'undefined') {
+        console.log("Username is empty");
+        res.writeHead(500, {"Content-type": "text/plain"});
+        res.end(JSON.stringify({message: upperFirstLet("Username is empty")}));
+        return;
+    }
+
+    var query = `SELECT * FROM courses INNER JOIN enrollments ON courses.code = enrollments.coursecode WHERE username=${username}`;
+
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed');
+            console.error(err);
+        } else {
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    console.error("all query failed", err);
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end(JSON.stringify(result.rows));
+                }
+            });
+        }
+    });
+}
+
+function getUserByCourseCode(res, uri) {
     const client = new pg.Client(dbURL);
     const courseCode = qs.parse(uri.query).courseCode;
     const filter = qs.parse(uri.query).filter;
-    var query = "SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username";
 
     if (typeof courseCode === 'undefined') {
         console.log("Course code is empty");
@@ -118,17 +186,47 @@ function getUserByCourse(res, uri) {
         return;
     }
 
+    var query = `SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username WHERE coursecode=${courseCode}`;
     if (filter === 'student') {
-        query += " WHERE acctype = 'student';"
+        query += " AND acctype = 'student'"
     } else if (filter === 'professor') {
-        query += " WHERE acctype = 'professor';"
-    } else {
-        query += ";";
+        query += " AND acctype = 'professor'"
     }
+    query += " ORDER BY lastname;";
 
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
+            console.log('Connect to db failed');
+            console.error(err);
+        } else {
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    console.error("all query failed", err);
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end(JSON.stringify(result.rows));
+                }
+            });
+        }
+    });
+}
+
+function getUsers(res, uri) {
+    const client = new pg.Client(dbURL);
+    const username = qs.parse(uri.query).username;
+
+    var query = "SELECT * FROM users";
+    if (username) {
+        query += ` WHERE username=${username}`;
+    }
+    query += " ORDER BY lastname;";
+
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed');
             console.error(err);
         } else {
             client.query(query, function (err, result) {
