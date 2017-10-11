@@ -60,17 +60,26 @@ var server = http.createServer(function (req, res) {
         case '/signUpForm.html':
             sendFile(res, 'public/signUpForm.html')
             break
+        case '/classCatalog.html':
+            sendFile(res, 'public/classCatalog.html')
+            break
         case '/css/style.css':
             sendFile(res, 'public/css/style.css', 'text/css')
             break
         case '/css/SignupProfileStyle.css':
             sendFile(res, 'public/css/SignupProfileStyle.css', 'text/css')
             break
+        case '/css/classCatalogStyle.css':
+            sendFile(res, 'public/css/classCatalogStyle.css', 'text/css')
+            break
         case '/js/scripts.js':
             sendFile(res, 'public/js/scripts.js', 'text/javascript')
             break
         case '/js/SignUpscripts.js':
             sendFile(res, 'public/js/SignUpscripts.js', 'text/javascript')
+            break
+        case '/js/classCatalogScripts.js':
+            sendFile(res, 'public/js/classCatalogScripts.js', 'text/javascript')
             break
         default:
             res.end('404 not found')
@@ -97,7 +106,7 @@ function sendDb(res, uri) {
             console.log('Connect to db failed')
             console.error(err);
         } else {
-            var query = "SELECT * FROM puppies ORDER BY name;"
+            var query = "SELECT * FROM users ORDER BY lastname;";
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
