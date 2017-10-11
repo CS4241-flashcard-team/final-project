@@ -1,8 +1,8 @@
 function joinCourse(){
     const data = {
         target: 'addCourse',
-        courseCode: document.getElementById('my-code').value,
-        username: document.getElementById('my-username').value
+        courseCode: document.getElementById('selectCourse').value,
+        // username: document.getElementById('my-username').value
     };
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
@@ -52,6 +52,18 @@ function getAllCourses() {
     xhr.send();
 }
 
+function getUserCourses() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=coursesByUsername&username=my-username", true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            buildFolder(this.response);
+        }
+    };
+    xhr.send();
+}
+
 var templateCourse = _.template(
     '<option>' +
     '<%= code %>' +
@@ -94,7 +106,16 @@ function buildCourseJoin(list) {
     for (i = 0; i < list.length; i++) {
         toAppendString += templateCourse(list[i]);
     }
-    console.log(toAppendString);
     document.querySelector("#selectCourse").innerHTML = toAppendString;
-    console.log(document.querySelector("#selectCourse"))
+}
+
+function buildFolder(list) {
+    console.log("here");
+    var i, toAppendString = "";
+    for (i = 0; i < list.length; i++) {
+        toAppendString += template(list[i]);
+    }
+    console.log(toAppendString);
+    document.querySelector("#courseRow").innerHTML = toAppendString;
+    console.log(document.querySelector("#courseRow"))
 }
