@@ -35,6 +35,21 @@
 
 
 # POST
+## Log in
+- **Required params**:
+    - target: logIn
+    - username: ...
+    - password: ...
+- **Optional params**:
+- **Example**:
+    - const data = {
+        target: 'addCourse',
+        username: 'my-username,
+        password: 'my-password'
+    };
+    - /post
+    - xhr.send(JSON.stringify(data))
+
 ## Professor adds new course
 - **Required params**:
     - target: addCourse
@@ -65,4 +80,4 @@
     - /post
     - xhr.send(JSON.stringify(data))
 
-# S3
+## S3
