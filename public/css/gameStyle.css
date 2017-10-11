@@ -25,3 +25,23 @@ body, h1 {
         background-color: rgb(95, 95, 95);
         border-color: white;
     }
+
+    #game_element{
+        display: block;
+        margin: auto;
+        text-align: center;
+    }
+
+    #game_zone{
+        display: block;
+        margin: auto;
+        width: 50%;
+        font-size: 16px;
+        text-align: center;
+    }
+    #nextbtn{
+        display: block;
+        margin: auto;
+        margin-top: 30px;
+        padding: 20px;
+    }
