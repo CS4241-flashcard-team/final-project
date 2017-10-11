@@ -23,7 +23,13 @@ var server = http.createServer(function (req, res) {
             sendFile(res, 'public/index.html');
             break;
         case '/get':
-            sendDb(res, uri);
+            const target = qs.parse(uri.query).target;
+            if (target === 'userByCourse') {
+                getUserByCourse(res, uri);
+            }
+            if (target === 'userByUsername') {
+                getUserByUsername(res, uri);
+            }
             break;
         case '/post':
             var postData = '';
@@ -99,14 +105,32 @@ function upperFirstLet(str) {
     return words.join(' ');
 }
 
-function sendDb(res, uri) {
+function getUserByCourse(res, uri) {
     var client = new pg.Client(dbURL);
+    var courseCode = qs.parse(uri.query).courseCode;
+    var filter = qs.parse(uri.query).filter;
+    var query = "SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username";
+
+    if (typeof courseCode === 'undefined') {
+        console.log("Course code is empty");
+        res.writeHead(500, {"Content-type": "text/plain"});
+        res.end(JSON.stringify({message: upperFirstLet("Course code is empty")}));
+        return;
+    }
+
+    if (filter === 'student') {
+        query += " WHERE acctype = 'student';"
+    } else if (filter === 'professor') {
+        query += " WHERE acctype = 'professor';"
+    } else {
+        query += ";";
+    }
+
     client.connect(function (err, client, done) {
         if (err) {
             console.log('Connect to db failed')
             console.error(err);
         } else {
-            var query = "SELECT * FROM users ORDER BY lastname;";
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {

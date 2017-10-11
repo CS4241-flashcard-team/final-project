@@ -1,15 +1,27 @@
 function initCatalog() {
-    getAllUsers();
+    getAllStudents();
+    getProf();
 }
 
-function getAllUsers() {
-    console.log("getting puppies")
+function getProf() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get", true);
+    xhr.open("GET", "/get?target=userByCourse&courseCode=MU-101-A17&filter=professor", true);
     xhr.onload = function() {
         if (this.status === 200) {
-            buildList(this.response);
+            buildProfList(this.response);
+        }
+    };
+    xhr.send();
+}
+
+function getAllStudents() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=userByCourse&courseCode=MU-101-A17&filter=student", true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            buildStudentsList(this.response);
         }
     };
     xhr.send();
@@ -28,10 +40,18 @@ var thumbnailTemplate = _.template(
     '</div>'
 );
 
-function buildList(list) {
+function buildProfList(list) {
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
         toAppendString += thumbnailTemplate(list[i]);
     }
-    document.querySelector("#catalogRow").innerHTML = toAppendString;
+    document.querySelector("#catalogProfRow").innerHTML = toAppendString;
+}
+
+function buildStudentsList(list) {
+    var i, toAppendString = "";
+    for (i = 0; i < list.length; i++) {
+        toAppendString += thumbnailTemplate(list[i]);
+    }
+    document.querySelector("#catalogStudentsRow").innerHTML = toAppendString;
 }

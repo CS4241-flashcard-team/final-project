@@ -1,0 +1,30 @@
+body {
+    text-align: center;
+}
+
+h1 {
+    font-size: 75px;
+}
+
+#catalogContainer {
+    margin-top: 20px;
+}
+
+img {
+    margin: auto;
+}
+
+.caption {
+    text-align: center;
+    font-size: 25px;
+}
+
+.picContainer {
+    height: 250px;
+    overflow: hidden;
+
+    display: flex;              /* establish flex container */
+    flex-direction: column;     /* stack flex items vertically */
+    justify-content: center;    /* center items vertically, in this case */
+    align-items: center;        /* center items horizontally, in this case */
+}
