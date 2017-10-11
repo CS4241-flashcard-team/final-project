@@ -40,10 +40,23 @@ var thumbnailTemplate = _.template(
     '</div>'
 );
 
+var thumbnailTemplate2 = _.template(
+    '<div class="col-md-12">' +
+    '<div class="thumbnail">' +
+    '<div class="picContainer">' +
+    '<img id="<%= username %> pic" class="img-responsive img-rounded" src="https://s3.amazonaws.com/cs4241-fp/<%= picname %>" style="max-height: 250px">' +
+    '</div>' +
+    '<div class="caption">' +
+    '<p><%= firstname %> <%= lastname %></p>' +
+    '</div>' +
+    '</div>' +
+    '</div>'
+);
+
 function buildProfList(list) {
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
-        toAppendString += thumbnailTemplate(list[i]);
+        toAppendString += thumbnailTemplate2(list[i]);
     }
     document.querySelector("#catalogProfRow").innerHTML = toAppendString;
 }

@@ -4,8 +4,7 @@
     <title>CS4241 Assignment 6</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -14,21 +13,63 @@
     <script src="js/classCatalogScripts.js"></script>
 
     <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">            
     <link rel="stylesheet" type="text/css" href="css/classCatalogStyle.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body, h1 {
+        font-family: "Roboto Slab", "Dosis", sans-serif;
+        }
+        h1{
+            font-size: 80px;
+            display: block;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            background-color: black;
+            color: white;
+            padding: 20px;
+        }
+        h2{
+            font-family: "Roboto Slab", "Dosis", sans-serif;
+            font-size: 50px;
+            display: block;
+            padding: 20px;
+            margin-bottom: 20px; 
+            background-color: rgb(179, 179, 179)
+        }
+        #backBtn{
+            display: block;
+            margin: left;
+            background-color: rgb(95, 95, 95);
+            border-color: white;
+        }
+    </style>
 </head>
 
 <body onload="initCatalog()">
 
 <!-- Class Catalog Name -->
-<div id="classCatalogName">
-    <h1>Class Catalog</h1>
-</div>
+    <div id="classCatalogName">
+        <h1><button type="button" id="backBtn" onclick="location.href='/dashboard.html'" class="btn btn-primary btn-lg" >
+                <span class="glyphicon glyphicon-menu-left"></span> Back
+        </button> Class Catalog</h1>
+    </div>    
+
 
 <!-- Class Catalog -->
 <div id="catalogContainer" class="container">
-    <div id="catalogProfRow" class="row"></div>
-    <div id="catalogStudentsRow" class="row"></div>
+    <section id="prof">
+        <h2>Professor:</h2>
+        <div id="catalogProfRow" class="row"></div>
+    </section>
+    <section id="students">
+        <h2>Students:</h2>
+        <div id="catalogStudentsRow" class="row"></div>
+    </section>
 </div>
 
 </body>
 </html>
+
