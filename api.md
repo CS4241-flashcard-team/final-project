@@ -77,18 +77,22 @@
 - **Required params**:
     - target: updateUser
     - username: ...
-- **Optional params**:
     - password: ...
     - firstname: ...
     - lastname: ...
     - picname: ...
     - acctype: ...
+- **Optional params**:
 - **Example**:
-    - const data = {
-        target: 'updateUser',
-        username: 'my-username',
-        password: 'new-password'
-    };
+     - const data = {
+         target: 'updateUser',
+         username: 'my-username',
+         password: 'new-password',
+         firstname: 'new-firstname',
+         lastname: 'new-lastname',
+         picname: 'new-username.jpg',
+         acctype: 'student'
+     };
     - /post
     - xhr.send(JSON.stringify(data))
 

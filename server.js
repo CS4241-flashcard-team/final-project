@@ -318,6 +318,28 @@ function addNewUser(res, username, password, firstname, lastname, picname, accty
     });
 }
 
+function updateUser(res, username, password, firstname, lastname, picname, acctype) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed')
+            console.error(err);
+        } else {
+            const query = `UPDATE users SET password='${password}', firstname='${upperFirstLet(firstname)}', lastname='${upperFirstLet(lastname)}', picname='${picname}', acctype='${acctype}' WHERE username='${username}';`;
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end();
+                }
+            });
+        }
+    });
+}
+
 function addToCoursesDb(res, courseCode, name) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
