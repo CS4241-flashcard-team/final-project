@@ -57,6 +57,11 @@
       width: 40%;
       text-align: center;
     }
+
+    #sideNav, #content{
+      padding: 0px;
+    }
+    
   </style>
 </head>
 
@@ -64,7 +69,7 @@
 
 <h1>Dashboard</h1>
 
-<div class = "col-sm-1 text-left">
+<div id= "sideNav"mclass = "col-sm-1 text-left">
 <ul class = "nav nav-pills nav-stacked sidenav">
   <li><a href="profilePage.html">Your Profile</a></li>
   <li class="active"><a href="#">Sign Up</a></li>
@@ -73,7 +78,7 @@
 </ul>
 </div>
 
-<div class = "col-sm-2"></div>
+<div id = "content" class = "col-sm-2"></div>
 
 <div class="container text-center">
   <h2>Your current courses:</h2>

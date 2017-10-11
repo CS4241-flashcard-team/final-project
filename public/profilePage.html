@@ -23,14 +23,18 @@
 			height: 100%;
 			background-color: grey;
 		}
+
+		#sideNav, #content{
+      	padding: 0px;
+   		 }
 	</style>
 	
   </head>
   <script type="text/javascript" src="js/SignUpscripts.js"></script>
   <body onload="getProfileInfo()">
 		<h1>Game of Faces: Your Profile</h1>
-	<div class="container-fluid">
-		<div class = "col-sm-1 text-left">
+	<div id= "content" class="container-fluid">
+		<div id = "sideNav" class = "col-sm-1 text-left">
 		<ul class = "nav nav-pills nav-stacked sidenav">
 		<li class="active"><a href="#">Your Profile</a></li>
 		<li><a href="signUpForm.html">Sign Up</a></li>
