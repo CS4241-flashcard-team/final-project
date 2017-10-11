@@ -17,75 +17,16 @@
     <link rel="stylesheet" type="text/css" href="css/classCatalogStyle.css"/>
 </head>
 
-<body>
+<body onload="initCatalog()">
+
+<!-- Class Catalog Name -->
 <div id="classCatalogName">
     <h1>Class Catalog</h1>
 </div>
 
-<!-- Alert -->
-<div id="my-alert" style="display: none;"></div>
-
-<!-- Buttons -->
-<button type="button" id="addBtn"
-        class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addModal">Add Puppy</button>
-<button id="toggleBtn" class="btn btn-info btn-lg" onclick="toggleCatalog()">Hide Catalog</button>
-
-<!-- Hello modal -->
-<div id="helloModal" class="modal fade" role="dialog" style="display: none">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Welcome to Puppy Catalog!</h4>
-            </div>
-            <div class="modal-body">
-                <p>This puppy catalog is to brighten your day, especially during finals week :)</p>
-                <p>Click on a thumbnail to see a bigger picture of the puppy, because I know you can't have enough of puppies!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Puppy Modal -->
-<div id="addModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add New Puppy</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label class="control-label">Name</label>
-                        <input id="add-name" type="text" class="form-control" placeholder="Enter puppy name"/>
-                    </div>
-                    <input id="add-file" type="file" accept=".png, .jpg, .jpeg">
-                    <div id="add-alert" style="display: none;"></div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="addPuppy()">Add Puppy!</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Display Puppy Modal -->
-<div id="displayModal" class="modal fade" role="dialog" style="display: none">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="display-title" class="modal-title"></h4>
-            </div>
-            <div id="display-body" class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Puppy Catalog -->
+<!-- Class Catalog -->
 <div id="catalogContainer" class="container">
     <div id="catalogRow" class="row"></div>
-    <div id="catalogEmptyPrompt" style="display: none">Where did all the puppies go?</div>
 </div>
 
 </body>
