@@ -10,7 +10,7 @@ const dbURL = process.env.DATABASE_URL + "?ssl=true";
 
 // aws
 const aws = require('aws-sdk');
-const S3_BUCKET = process.env.S3_BUCKET;
+const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 
 var server = http.createServer(function (req, res) {
     var uri = url.parse(req.url)
@@ -48,9 +48,15 @@ var server = http.createServer(function (req, res) {
                 }
             });
             req.on('end', function () {
-                var data = JSON.parse(postData);
+                const data = JSON.parse(postData);
                 if (data.target === 'logIn') {
                     logIn(res, data.username, data.password);
+                }
+                if (data.target === 'newUser') {
+                    addNewUser(res, data.username, data.password, data.firstname, data.lastname, data.picname, data.acctype);
+                }
+                if (data.target === 'updateUser') {
+                    updateUser(res, data.username, data.password, data.firstname, data.lastname, data.picname, data.acctype);
                 }
                 if (data.target === 'addCourse') {
                     addToCoursesDb(res, data.courseCode, data.name);
@@ -62,12 +68,11 @@ var server = http.createServer(function (req, res) {
             });
             break;
         case '/s3':
-            var action = qs.parse(uri.query).action;
+            const action = qs.parse(uri.query).action;
             if (action === 'put') {
                 s3put(res, uri);
-            }
-            if (action === 'delete') {
-                s3delete(res, uri);
+            } else {
+                console.log("Unknown s3 action")
             }
             break;
         case '/profilePage.html':
@@ -291,6 +296,28 @@ function logIn(res, username, password) {
     });
 }
 
+function addNewUser(res, username, password, firstname, lastname, picname, acctype) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed')
+            console.error(err);
+        } else {
+            const query = `INSERT INTO users VALUES ('${username}', '${password}', '${upperFirstLet(firstname)}', '${upperFirstLet(lastname)}', '${picname}', '${acctype}');`;
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end();
+                }
+            });
+        }
+    });
+}
+
 function addToCoursesDb(res, courseCode, name) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
@@ -338,19 +365,26 @@ function addToEnrollmentsDb(res, courseCode, username) {
 function s3put(res, uri) {
     const s3 = new aws.S3();
     const fileName = qs.parse(uri.query).fileName;
+    const fileType = qs.parse(uri.query).fileType;
     const s3Params = {
-        Bucket: S3_BUCKET,
-        Key: fileName
+        Bucket: S3_BUCKET_NAME,
+        Key: fileName,
+        Expires: 60,
+        ContentType: fileType,
+        ACL: 'public-read'
     };
 
-    s3.putObject(s3Params, (err, data) => {
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
         if(err){
             res.writeHead(500, {"Content-type": "text/plain"});
-            res.end(JSON.stringify({message: upperFirstLet(err.message)}));
-        } else {
-            res.writeHead(200, {"Content-type": "application/json"});
-            res.end();
+            return res.end(JSON.stringify({message: upperFirstLet(err.message)}));
         }
+        const returnData = {
+            signedRequest: data,
+            url: `https://${S3_BUCKET_NAME}.s3.amazonaws.com/${fileName}`
+        };
+        res.write(JSON.stringify(returnData));
+        res.end();
     });
 }
 
@@ -358,7 +392,7 @@ function s3delete(res, uri) {
     const s3 = new aws.S3();
     const fileName = qs.parse(uri.query).fileName;
     const s3Params = {
-        Bucket: S3_BUCKET,
+        Bucket: S3_BUCKET_NAME,
         Key: fileName
     };
 
@@ -377,7 +411,7 @@ function sendFile(res, filename, contentType) {
     contentType = contentType || 'text/html';
 
     fs.readFile(filename, function (error, content) {
-        res.writeHead(200, {'Content-type': contentType})
+        res.writeHead(200, {'Content-type': contentType});
         res.end(content, 'utf-8')
     })
 }
