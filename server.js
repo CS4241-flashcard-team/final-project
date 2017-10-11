@@ -79,6 +79,12 @@ var server = http.createServer(function (req, res) {
         case '/classCatalog.html':
             sendFile(res, 'public/classCatalog.html')
             break
+        case '/game.html':
+            sendFile(res, 'public/game.html')
+            break
+        case '/dashboard.html':
+            sendFile(res, 'public/dashboard.html')
+            break
         case '/css/style.css':
             sendFile(res, 'public/css/style.css', 'text/css')
             break
@@ -88,6 +94,9 @@ var server = http.createServer(function (req, res) {
         case '/css/classCatalogStyle.css':
             sendFile(res, 'public/css/classCatalogStyle.css', 'text/css')
             break
+        case '/css/gameStyle.css':
+            sendFile(res, 'public/css/gameStyle.css', 'text/css')
+            break
         case '/js/scripts.js':
             sendFile(res, 'public/js/scripts.js', 'text/javascript')
             break
@@ -96,6 +105,9 @@ var server = http.createServer(function (req, res) {
             break
         case '/js/classCatalogScripts.js':
             sendFile(res, 'public/js/classCatalogScripts.js', 'text/javascript')
+            break
+        case '/js/game.js':
+            sendFile(res, 'public/js/game.js', 'text/javascript')
             break
         default:
             res.end('404 not found')

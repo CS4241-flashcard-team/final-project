@@ -1,0 +1,27 @@
+body, h1 {
+    font-family: "Roboto Slab", "Dosis", sans-serif;
+    }
+    h1{
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: black;
+        padding: 20px;
+    }
+    h2{
+        font-family: "Roboto Slab", "Dosis", sans-serif;
+        font-size: 30px;
+        display: block;
+        padding-left: 30px;
+    }
+    h3{
+        font-size: 20px;
+        display: block;
+        padding-left: 30px;
+    }
+    #backBtn{
+        display: block;
+        margin: left;
+        background-color: rgb(95, 95, 95);
+        border-color: white;
+    }
