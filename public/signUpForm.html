@@ -44,7 +44,7 @@
 		<div class = "col-sm-8 center-block text-center">
 		
 		<div class="body">
-			<form id="signup" method="POST">
+			<form id="signup" action="/dashboard.html" method="POST">
 			
 			<!--picture upload-->
 			<div class="form-group">
@@ -82,11 +82,11 @@
 			<!--account type-->
 			<div class="form-group">
 			<label>Account type:</label>
-			<label><input type="radio" name="accountType" value="Student" checked>Student<br></label>
-			<label><input type="radio" name="accountType" value="Teacher">Teacher<br></label>
+			<label><input type="radio" name="accountType" id="student" value="Student" checked>Student<br></label>
+			<label><input type="radio" name="accountType" id="teacher" value="Teacher">Teacher<br></label>
 			</div>
 
-			<button type="button" onclick="signUp()" class="btn btn-primary" name="submit">Submit</button>
+			<button type="submit" onclick="signUp(event)" class="btn btn-primary" name="submit">Submit</button>
 			
 			</form>
 		</div>

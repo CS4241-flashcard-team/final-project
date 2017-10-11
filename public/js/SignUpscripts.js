@@ -51,7 +51,7 @@ function imgConfirm() {
     }
 }
 
-function signUp(){
+function signUp(event){
 	if (unameStatus && pwdConfirm() && imgConfirm()) {
 		//pass in everything to be added to db, pwds match and uname is unique
         getS3PutSignedRequest();
@@ -109,6 +109,14 @@ function addImageToS3(file, fileName, signedRequest) {
 }
 
 function addUserToDb(fileName) {
+	var accountType;
+	if(document.getElementById("student").checked){
+		accountType = document.getElementById("student").value;
+	}
+	else{	
+		accountType = document.getElelmentById("teacher").value;
+	}
+	
     var data = {
         target: 'newUser',
         username: document.getElementById('username').value,
@@ -116,7 +124,7 @@ function addUserToDb(fileName) {
         firstname: document.getElementById('signUpFirstName').value,
         lastname: document.getElementById('signUpLastName').value,
         picname: fileName,
-        acctype: 'student'
+        acctype: accountType
     };
     var xhrDb = new XMLHttpRequest();
     xhrDb.responseType = "json";

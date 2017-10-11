@@ -114,6 +114,9 @@ var server = http.createServer(function (req, res) {
         case '/js/classCatalogScripts.js':
             sendFile(res, 'public/js/classCatalogScripts.js', 'text/javascript')
             break
+		case '/js/profilePostScripts.js':
+            sendFile(res, 'public/js/profilePostScripts.js', 'text/javascript')
+            break
         case '/js/game.js':
             sendFile(res, 'public/js/game.js', 'text/javascript')
             break

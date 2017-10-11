@@ -3,6 +3,7 @@ var fName = "";
 var lName = "";
 var imgSrc = "";
 var actType = "";
+var pwd = "";
 
 function getProfileInfo(){
 	var xhr = new XMLHttpRequest();
@@ -16,6 +17,7 @@ function getProfileInfo(){
 			lName = this.response[0].lastname;
 			imgSrc = this.response[0].picname;
 			actType = this.response[0].acctype;
+			pwd = this.response[0].password;
 			
 			document.getElementById("uname").innerText = uName;
 			document.getElementById("first").innerText = fName;
@@ -29,6 +31,8 @@ function getProfileInfo(){
 };
 
 function profileChangePwd(event){
+	//check if old password == entered password
+	
 	if(!pwdConfirm()){
 		document.getElementById("pwdComp").style.backgroundColor = '#FF7777';
 		event.preventDefault();
@@ -37,7 +41,7 @@ function profileChangePwd(event){
 	}
 	else if(document.getElementById("passwordFirst").value != "" && document.getElementByid("passwordConf").value != ""){
 		const data = {
-			target: 'updateInfo',
+			target: 'updateUser',
 			username: uname,
 			firstname: fName,
 			lastname: lName,
@@ -49,9 +53,7 @@ function profileChangePwd(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-			   
-			
-				
+				getProfileInfo();
 			}
 		};
 		xhr.send(JSON.stringify(data));	
@@ -64,7 +66,7 @@ function profileChangeName(event){
 		event.preventDefault();
 		
 		const data = {
-			target: 'updateInfo',
+			target: 'updateUser',
 			username: uname,
 			firstname: document.getElementById("firstName").value,
 			lastname: document.getElementById("lastName").value,
@@ -76,9 +78,7 @@ function profileChangeName(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-			   
-			
-				
+			   getProfileInfo();
 			}
 		};
 		xhr.send(JSON.stringify(data));	
@@ -92,7 +92,7 @@ function profileChangePic(event){
 		event.preventDefault();
 		
 		const data = {
-			target: 'updateInfo',
+			target: 'updateUser',
 			username: uname,
 			firstname: fName,
 			lastname: lName,
@@ -104,9 +104,7 @@ function profileChangePic(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-			   
-			
-				
+			   getProfileInfo();
 			}
 		};
 		xhr.send(JSON.stringify(data));	
