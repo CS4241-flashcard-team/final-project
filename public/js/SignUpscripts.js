@@ -3,25 +3,6 @@ var updatePic = function (event) {
     document.getElementById('profile').src = URL.createObjectURL(event.target.files[0]);
 };
 
-
-function getProfileInfo(){
-	var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
-    xhr.open("GET", "/get?target=users&username=taylorSwift", true);
-    xhr.onload = function() {
-        if (this.status === 200) {
-            console.log(this.response);
-			document.getElementById("uname").innerText = this.response[0].username;
-			document.getElementById("first").innerText = this.response[0].firstname;
-			document.getElementById("last").innerText = this.response[0].lastname;
-			document.getElementById("profileImg").src = "https://s3.amazonaws.com/cs4241-fp/"+this.response[0].picname;
-			document.getElementById("acctType").innerText = this.response[0].acctype;
-        }
-    };
-    xhr.send();
-	
-};
-
 var unameStatus = false;
 function unameConfirm(){
 	if(document.getElementById("username").value != ""){
