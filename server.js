@@ -117,7 +117,7 @@ function getCourses(res, uri) {
 
     var query = "SELECT * FROM courses";
     if (courseCode) {
-        query += ` WHERE code=${courseCode}`;
+        query += ` WHERE code = '${courseCode}'`;
     }
     query += ";";
 
@@ -152,7 +152,7 @@ function getCourseByUsername(res, uri) {
         return;
     }
 
-    var query = `SELECT * FROM courses INNER JOIN enrollments ON courses.code = enrollments.coursecode WHERE username=${username}`;
+    var query = `SELECT * FROM courses INNER JOIN enrollments ON courses.code = enrollments.coursecode WHERE username = '${username}'`;
 
     client.connect(function (err, client, done) {
         if (err) {
@@ -186,7 +186,7 @@ function getUserByCourseCode(res, uri) {
         return;
     }
 
-    var query = `SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username WHERE coursecode=${courseCode}`;
+    var query = `SELECT * FROM users INNER JOIN enrollments ON users.username = enrollments.username WHERE coursecode = '${courseCode}'`;
     if (filter === 'student') {
         query += " AND acctype = 'student'"
     } else if (filter === 'professor') {
@@ -220,7 +220,7 @@ function getUsers(res, uri) {
 
     var query = "SELECT * FROM users";
     if (username) {
-        query += ` WHERE username=${username}`;
+        query += ` WHERE username = '${username}'`;
     }
     query += " ORDER BY lastname;";
 
