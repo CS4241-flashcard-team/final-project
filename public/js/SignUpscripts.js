@@ -3,38 +3,9 @@ var updatePic = function (event) {
     document.getElementById('profile').src = URL.createObjectURL(event.target.files[0]);
 };
 
-function getValues(xhr){
-	console.log("In getValues...readyState = "+xhr.readyState+" status="+xhr.status);
-	if(xhr.readyState != 4){
-		console.log("In getValues...readyState = "+xhr.readyState);
-		return;
-	}
-	
-	if(xhr.status !=200){
-		//error
-		console.log("Error handling server response. Error code:"+xhr.status);
-	}
-
-	//Stubs for getting information
-	console.log(xhr.response);
-	document.getElementById("uname").innerText = xhr.username;
-	document.getElementById("first").innerText = xhr.firstname;
-	document.getElementById("last").innerText = xhr.lastname;
-	document.getElementById("profileImg").src = xhr.picname;
-	document.getElementById("acctType").innerText = xhr.acctype;
-	
-};
 
 
 function getProfileInfo(){
-	/*var xhr = new XMLHttpRequest();
-	xhr.responseType = "json";
-	console.log("In getProfileInfo...");
-	xhr.open("GET", "/get?users&username=taylorSwift");
-	xhr.send();
-	xhr.onreadystatechange = function() {getValues(xhr)};
-	
-	*/
 	var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("GET", "/get?target=users&username=taylorSwift", true);
@@ -52,19 +23,66 @@ function getProfileInfo(){
 	
 };
 
-function joinCourse(){
-	const data = {
-		target: '',
-		username: '',
-		pwd: '',
-		imgSrc: '',
-		
-	};
+function unameConfirm(){
+	if(document.getElementById("username").value != ""){
 	
-	xhr.open("GET", "/get?userByUsername&username=taylorSwift");
-	xhr.send();
-	xhr.onreadystatechange = function() {getValues(xhr)};
-	
-}
+	var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=users&username="+document.getElementById("username").value, true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+           
+			if(this.response[0] == undefined){
+				document.getElementById("unameComp").innerText = "";
+				return true;
+			}
+			else{
+				document.getElementById("unameComp").innerText = "This username is already taken.";
+				return false;
+			}
+			
+        }
+    };
+    xhr.send();	
+	}
+	else{
+		document.getElementById("unameComp").innerText = "Please enter a username";
+	}
+};
 
+function pwdConfirm(){
+	if(document.getElementById("passwordFirst").value == document.getElementById("passwordConf").value){
+		document.getElementById("pwdComp").innerText = "";
+		return true;
+	}
+	else{
+		document.getElementById("pwdComp").innerText = "Passwords are different.";
+		return false;
+	}
+	
+};
+
+
+function signUp(){
+	if(pwdConfirm() && unameConfirm()){
+		//pass in everything to be added to db, pwds match and uname is unique
+		
+	}
+	else{
+		document.getElementById("pwdComp").style.backgroundColor = '#FF7777';
+		document.getElementById("unameComp").style.backgroundColor = '#FF7777';
+		
+	}
+};
+
+function profileChangePwd(){
+	if(pwdConfirm()){
+		//make post request
+		
+	}
+	else{
+		document.getElementById("pwdComp").style.backgroundColor = '#FF7777';
+		
+	}
+};
 
