@@ -169,6 +169,7 @@ function displayResult() {
 
     // Insert result into table
     for (i = 0; i < questionSize; i++) {
+        document.getElementById("no"+ (i+1).toString()).innerHTML = i;
         document.getElementById("img"+(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />"
         document.getElementById("ca"+ (i+1).toString()).innerHTML = aoq[i].answer;
         document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
