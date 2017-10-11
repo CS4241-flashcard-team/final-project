@@ -54,16 +54,28 @@ var server = http.createServer(function (req, res) {
                 console.log("Unknown s3 action")
             }
             break;
+        case '/profilePage.html':
+            sendFile(res, 'public/profilePage.html')
+            break
+        case '/signUpForm.html':
+            sendFile(res, 'public/signUpForm.html')
+            break
         case '/css/style.css':
-            sendFile(res, 'public/css/style.css', 'text/css');
-            break;
+            sendFile(res, 'public/css/style.css', 'text/css')
+            break
+        case '/css/SignupProfileStyle.css':
+            sendFile(res, 'public/css/SignupProfileStyle.css', 'text/css')
+            break
         case '/js/scripts.js':
-            sendFile(res, 'public/js/scripts.js', 'text/javascript');
-            break;
+            sendFile(res, 'public/js/scripts.js', 'text/javascript')
+            break
+        case '/js/SignUpscripts.js':
+            sendFile(res, 'public/js/SignUpscripts.js', 'text/javascript')
+            break
         default:
-            res.end('404 not found');
+            res.end('404 not found')
     }
-})
+}
 
 server.listen(process.env.PORT || port);
 console.log('listening on 8080');

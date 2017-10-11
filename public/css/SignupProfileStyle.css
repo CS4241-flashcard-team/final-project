@@ -5,7 +5,25 @@ img{
 	
 }
 .body{
-	padding-bottom: 5%;
+	padding-bottom: 10%;
 	margin: auto;
 	width: 75%;
+}
+
+input[type="file"]{
+	display: block;
+	margin: auto;
+	
+}
+
+ul li a{
+	font-size: 1.5em;
+}
+
+.sidenav{
+	padding-top: 5%;
+	position: fixed;
+	list-style: none;
+	background-color: #DDDDDD;
+	height: 100%;
 }
