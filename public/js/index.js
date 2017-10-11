@@ -13,6 +13,7 @@ function logIn(){
         }
 
         if (this.status === 200) {
+            window.localStorage.setItem('username', document.getElementById('userName').value);
             console.log('yay');
         }
     };
