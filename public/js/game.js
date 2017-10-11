@@ -21,11 +21,12 @@ var aoq = [question1, question2, question3];
 // Variable to keep
 var choice = [maxQuestion];
 var currentQuestion = 0;
-const maxQuestion = 2; // Update this to 10 later when everything works
+var maxQuestion = 2; // Update this to 10 later when everything works
 
 // Prepare question from the struct 'question' passed in
 // Update image, question choices accordingly
 function prepareQuestion(question) {
+    // Prepare array of choices
     var aoc = shuffleArray(question.choices);
 
     // Assign value to choice
@@ -89,8 +90,37 @@ function analyzeChoice() {
     if (currentQuestion < maxQuestion) {
         currentQuestion++;
         prepareQuestion(aoq[currentQuestion]);
+        clearTimeout(timeoutHandle);
+        countdown();
     }
 }
+
+// Countdown clock for the game
+var timeoutHandle;
+function countdown() {
+    var seconds = 20;
+    function tick() {
+        var counter = document.getElementById("timer");
+        seconds--;
+        counter.innerHTML = String(seconds);
+        if (seconds > 0) {
+            timeoutHandle = setTimeout(tick, 1000);
+        }
+        if (seconds === 0) {
+            choice[currentQuestion] = false;
+            alert("Time Out!!!");
+            if (currentQuestion < maxQuestion) {
+                currentQuestion++;
+                prepareQuestion(aoq[currentQuestion]);
+                clearTimeout(timeoutHandle);
+                countdown();
+            }
+        }
+    }
+    tick();
+}
+
+countdown(20);
 
 // Add event listeners to elements of page
 document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
