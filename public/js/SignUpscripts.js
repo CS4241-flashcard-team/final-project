@@ -3,32 +3,34 @@ var updatePic = function (event) {
     document.getElementById('profile').src = URL.createObjectURL(event.target.files[0]);
 };
 
-
-function getValues(){
+function getValues(xhr){
+	console.log("In getValues...readyState = "+xhr.readyState+" status="+xhr.status);
 	if(xhr.readyState != 4){
+		console.log("In getValues...readyState = "+xhr.readyState);
 		return;
 	}
 	
 	if(xhr.status !=200){
 		//error
-		console.log("Error handling server response.");
+		console.log("Error handling server response. Error code:"+xhr.status);
 	}
 
 	//Stubs for getting information
-	document.getElementById("uname").innerText = xhr.uname;
-	document.getElementById("first").innerText = xhr.first;
-	document.getElementById("last").innerText = xhr.last;
-	document.getElementById("profileImg").src = xhr.src;
-	document.getElementById("acctType").innerText = xhr.acctType;
+	console.log("xhr is: "+xhr.username);
+	document.getElementById("uname").innerText = xhr.username;
+	document.getElementById("first").innerText = xhr.firstname;
+	document.getElementById("last").innerText = xhr.lastname;
+	document.getElementById("profileImg").src = xhr.picname;
+	document.getElementById("acctType").innerText = xhr.acctype;
 	
 };
 
 
 function getProfileInfo(){
-	/*var xhr = new XMLHttpRequest();
-
-	xhr.open("GET", "/profilePage.html");
-	xhr.send()
-	xhr.onreadystatechange = function() {getValues(xhr)}
-	*/
-}
+	var xhr = new XMLHttpRequest();
+	console.log("In getProfileInfo...");
+	xhr.open("GET", "/get?userByUsername&username=taylorSwift");
+	xhr.send();
+	xhr.onreadystatechange = function() {getValues(xhr)};
+	
+};
