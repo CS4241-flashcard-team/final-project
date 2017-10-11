@@ -255,15 +255,21 @@ function logIn(res, username, password) {
             console.log('Connect to db failed')
             console.error(err);
         } else {
-            const query = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
+            const query = `SELECT password FROM users WHERE username = '${username}';`;
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
                     res.writeHead(500, {"Content-type": "text/plain"});
                     res.end(JSON.stringify({message: upperFirstLet(err.message)}));
                 } else {
-                    res.writeHead(200, {"Content-type": "application/json"});
-                    res.end();
+                    console.log(result.rows);
+                    if (result.rows.password === password) {
+                        res.writeHead(200, {"Content-type": "application/json"});
+                        res.end();
+                    } else {
+                        res.writeHead(500, {"Content-type": "text/plain"});
+                        res.end(JSON.stringify({message: upperFirstLet("Wrong username or password")}));
+                    }
                 }
             });
         }
