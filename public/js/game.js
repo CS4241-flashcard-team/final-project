@@ -101,8 +101,8 @@ function displayResult() {
     document.getElementById("result_screen").removeAttribute("hidden");
 
     // Hide other game elements
-    document.getElementById("game_element").setAttribute("hidden", "");
-    document.getElementById("game_zone").setAttribute("hidden", "");
+    document.getElementById("game_element").style.display = "none";
+    document.getElementById("game_zone").style.display = "none";
 
     // Insert result into table
     for (i = 0; i < maxQuestion; i++) {
