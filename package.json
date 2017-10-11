@@ -8,6 +8,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.125.0",
+    "ejs": "^2.5.7",
     "pg": "^7.3.0"
   }
 }
