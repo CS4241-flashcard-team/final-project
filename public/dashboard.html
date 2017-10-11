@@ -50,6 +50,13 @@
       width: 200px;
       height: 200px;
     }
+
+    .jcBtn{
+      display: block;
+      margin: auto;
+      width: 40%;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -69,42 +76,18 @@
 <div class = "col-sm-2"></div>
 
 <div class="container text-center">
-  <div class="row">
-    <div class="col-sm-3">
-      <button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#playModal">
-           <img id= "folder" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png" width="20" />
-      </button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="playModal" role="dialog">
-         <div class="modal-dialog">
-
-       <!-- Modal content-->
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal">&times;</button>
-           <h4 class="modal-title">Course Name</h4>
-         </div>
-         <div class="modal-body">
-             <button type="button" class="btn btn-primary btn-lg">Play</button>
-             <button type="button" class="btn btn-primary btn-lg">View Class</button>
-         </div>
-       </div>
-
-      </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
+  <h2>Your current courses:</h2>
+    <div id="courseRow" class="row"></div>
+    
+    <!-- <div class="col-sm-3">
       <button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#playModal">
            <img id= "folder" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png" width="20"/>
       </button>
-      <p>Function to get course name</p>
+      <p>CourseID: <span id="courseID"></span></p>
 
-      <!-- Modal -->
       <div class="modal fade" id="playModal" role="dialog">
          <div class="modal-dialog">
 
-       <!-- Modal content-->
        <div class="modal-content">
          <div class="modal-header">
            <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -117,34 +100,12 @@
        </div>
 
       </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#playModal">
-           <img id= "folder" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png" width="20" />
-      </button>
+      </div> -->
+    </div> 
 
-      <!-- Modal -->
-      <div class="modal fade" id="playModal" role="dialog">
-         <div class="modal-dialog">
-
-       <!-- Modal content-->
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal">&times;</button>
-           <h4 class="modal-title">Course Name</h4>
-         </div>
-         <div class="modal-body">
-             <button type="button" class="btn btn-primary btn-lg">Play</button>
-             <button type="button" class="btn btn-primary btn-lg">View Class</button>
-         </div>
-       </div>
-
-      </div>
-      </div>
-    </div>
     </div><br>
 
+    <div class = "jcBtn">
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createModal">Create a course</button>
 
      <!-- Modal -->
@@ -228,6 +189,7 @@
       </div>
 
     </div>
+  </div>
   </div>
   </div>
 
