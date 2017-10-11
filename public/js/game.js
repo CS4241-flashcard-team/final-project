@@ -21,7 +21,7 @@ var aoq = [question1, question2, question3];
 // Variable to keep
 var choice = [maxQuestion];
 var currentQuestion = 0;
-var maxQuestion = 2; // Update this to 10 later when everything works
+var maxQuestion = 3; // Update this to 10 later when everything works
 
 // Prepare question from the struct 'question' passed in
 // Update image, question choices accordingly
@@ -82,16 +82,33 @@ function analyzeChoice() {
 
     // Decide whether it is correct
     choice[currentQuestion] = (aoq[currentQuestion].answer === ans);
-    if (choice[currentQuestion]) {
-        alert("Correct answer! Value chosen is "+ans);
-    } else alert("Wrong! Value chosen is "+ans);
 
     // Update to next question
-    if (currentQuestion < maxQuestion) {
+    if (currentQuestion < maxQuestion - 1) {
         currentQuestion++;
         prepareQuestion(aoq[currentQuestion]);
         clearTimeout(timeoutHandle);
         countdown();
+    } else if (currentQuestion === maxQuestion - 1) {
+        clearTimeout(timeoutHandle);
+        displayResult();
+    }
+}
+
+// Display result and hide everything else
+function displayResult() {
+    // Show result screen
+    document.getElementById("result_screen").removeAttribute("hidden");
+
+    // Hide other game elements
+    document.getElementById("game_element").setAttribute("hidden", "");
+    document.getElementById("game_zone").setAttribute("hidden", "");
+
+    // Insert result into table
+    for (i = 0; i < maxQuestion; i++) {
+        document.getElementById("img"+(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />"
+        document.getElementById("ca"+ (i+1).toString()).innerHTML = aoq[i].answer;
+        document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
     }
 }
 
@@ -108,20 +125,23 @@ function countdown() {
         }
         if (seconds === 0) {
             choice[currentQuestion] = false;
-            alert("Time Out!!!");
-            if (currentQuestion < maxQuestion) {
+            if (currentQuestion < maxQuestion - 1) {
                 currentQuestion++;
                 prepareQuestion(aoq[currentQuestion]);
                 clearTimeout(timeoutHandle);
                 countdown();
+            } else if (currentQuestion === maxQuestion - 1) {
+                clearTimeout(timeoutHandle);
+                displayResult();
             }
         }
     }
     tick();
 }
+countdown();
 
-countdown(20);
-
-// Add event listeners to elements of page
-document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
-document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
+function initGame() {
+    // Add event listeners to elements of page
+    document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
+    document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
+}

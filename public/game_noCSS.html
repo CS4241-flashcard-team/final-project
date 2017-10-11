@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing for game_mod1.js</title>
+    <script scr="js/game.js"></script>
+
+</head>
+<body onload="initGame()">
+    <div id="game_element">
+        <h2>Question No. <span id="qnum"></span></h2>
+        <h2>Time left is: <span id="timer">20</span></h2>
+        <button id="back_game">Back to Menu</button>
+    </div>
+    <div id="game_zone">
+        <div id="img_container">
+            <img src="" id="avatar" />
+        </div>
+        <div id="qzone">
+            <form action="" method="post" id="quiz">
+                <div>
+                    <input type="radio" name="choice" id="c1" value="A" />
+                    <label id="l1" for="c1"></label>
+                </div>
+
+                <div>
+                    <input type="radio" name="choice" id="c2" value="B" />
+                    <label id="l2" for="c2"></label>
+                </div>
+
+                <div>
+                    <input type="radio" name="choice" id="c3" value="C" />
+                    <label id="l3" for="c3"></label>
+                </div>
+
+                <div>
+                    <input type="radio" name="choice" id="c4" value="D" />
+                    <label id="l4" for="c4"></label>
+                </div>
+            </form>
+            <button id="nextbtn">Next</button>
+        </div>
+    </div>
+    <div id="result_screen" hidden>
+        <h2>RESULT</h2>
+        <table id="result_table" style="width:100%">
+            <tr>
+                <th>Question Number</th>
+                <th>Image</th>
+                <th>Correct Answer</th>
+                <th>Your Answer</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td id="img1"></td>
+                <td id="ca1"></td>
+                <td id="ya1"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td id="img2"></td>
+                <td id="ca2"></td>
+                <td id="ya2"></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td id="img3"></td>
+                <td id="ca3"></td>
+                <td id="ya3"></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td id="img4"></td>
+                <td id="ca4"></td>
+                <td id="ya4"></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td id="img5"></td>
+                <td id="ca5"></td>
+                <td id="ya5"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td id="img6"></td>
+                <td id="ca6"></td>
+                <td id="ya6"></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td id="img7"></td>
+                <td id="ca7"></td>
+                <td id="ya7"></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td id="img8"></td>
+                <td id="ca8"></td>
+                <td id="ya8"></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td id="img9"></td>
+                <td id="ca9"></td>
+                <td id="ya9"></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td id="img10"></td>
+                <td id="ca10"></td>
+                <td id="ya10"></td>
+            </tr>
+        </table>
+        <button id="back_result">Back to Menu</button>
+    </div>
+</body>
+</html>
