@@ -43,16 +43,18 @@
 			<!--username--check to make sure it is not already taken-->
 			<div class="form-group">
 			<label>Username:</label>
-			<input type="text" name="username" class="form-control" required/>
+			<input type="text" name="username" onkeyup="unameConfirm();" class="form-control" id="username" required/>
+			<p id="unameComp"></p>
 			</div>
 			
 			<div class="form-group">
 			<label>Password:</label>
-			<input type="password" name="password" class="form-control" required/>
+			<input type="password" onkeyup="pwdConfirm();" name="password" class="form-control" id="passwordFirst" required/>
 			<br>
 			
 			<label>Confirm Password:</label>
-			<input type="password" name="passwordConfirm" class="form-control" required/>
+			<input type="password" onkeyup="pwdConfirm();" name="passwordConfirm" class="form-control" id="passwordConf" required/>
+			<p id="pwdComp"></p>
 			</div>
 			
 			<div class="form-group">
@@ -71,7 +73,7 @@
 			<label><input type="radio" name="accountType" value="Teacher">Teacher<br></label>
 			</div>
 
-			<button type="submit" class="btn-primary" name="submit">Submit</button>
+			<button type="button" onclick="signUp()" class="btn btn-primary" name="submit">Submit</button>
 			
 			</form>
 		</div>

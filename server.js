@@ -24,16 +24,16 @@ var server = http.createServer(function (req, res) {
             break;
         case '/get':
             const target = qs.parse(uri.query).target;
-            if (target === 'courseByCourseCode') {
+            if (target === 'courses') {
                 getCourses(res, uri);
             }
-            if (target === 'courseByUsername') {
-                getCourseByUsername(res, uri);
+            if (target === 'coursesByUsername') {
+                getCoursesByUsername(res, uri);
             }
-            if (target === 'userByCourseCode') {
-                getUserByCourseCode(res, uri);
+            if (target === 'usersByCourseCode') {
+                getUsersByCourseCode(res, uri);
             }
-            if (target === 'userByUsername') {
+            if (target === 'users') {
                 getUsers(res, uri);
             }
             break;
@@ -49,21 +49,25 @@ var server = http.createServer(function (req, res) {
             });
             req.on('end', function () {
                 var data = JSON.parse(postData);
-                // console.log(data)
-                if (data.type === 'add') {
-                    handleAdd(res, data.name, data.pic);
+                if (data.target === 'logIn') {
+                    logIn(res, data.username, data.password);
+                }
+                if (data.target === 'addCourse') {
+                    addToCoursesDb(res, data.courseCode, data.name);
+                    addToEnrollmentsDb(res, data.courseCode, data.username);
+                }
+                if (data.target === 'joinCourse') {
+                    addToEnrollmentsDb(res, data.courseCode, data.username);
                 }
             });
             break;
-            break;
         case '/s3':
             var action = qs.parse(uri.query).action;
-            if (action === 'get') {
-                s3get(res, uri);
-            } else if (action === 'put') {
+            if (action === 'put') {
                 s3put(res, uri);
-            } else {
-                console.log("Unknown s3 action")
+            }
+            if (action === 'delete') {
+                s3delete(res, uri);
             }
             break;
         case '/profilePage.html':
@@ -75,6 +79,12 @@ var server = http.createServer(function (req, res) {
         case '/classCatalog.html':
             sendFile(res, 'public/classCatalog.html')
             break
+        case '/game.html':
+            sendFile(res, 'public/game.html')
+            break
+        case '/dashboard.html':
+            sendFile(res, 'public/dashboard.html')
+            break
         case '/css/style.css':
             sendFile(res, 'public/css/style.css', 'text/css')
             break
@@ -84,14 +94,23 @@ var server = http.createServer(function (req, res) {
         case '/css/classCatalogStyle.css':
             sendFile(res, 'public/css/classCatalogStyle.css', 'text/css')
             break
+        case '/css/gameStyle.css':
+            sendFile(res, 'public/css/gameStyle.css', 'text/css')
+            break
         case '/js/scripts.js':
             sendFile(res, 'public/js/scripts.js', 'text/javascript')
+            break
+        case '/js/index.js':
+            sendFile(res, 'public/js/index.js', 'text/javascript')
             break
         case '/js/SignUpscripts.js':
             sendFile(res, 'public/js/SignUpscripts.js', 'text/javascript')
             break
         case '/js/classCatalogScripts.js':
             sendFile(res, 'public/js/classCatalogScripts.js', 'text/javascript')
+            break
+        case '/js/game.js':
+            sendFile(res, 'public/js/game.js', 'text/javascript')
             break
         default:
             res.end('404 not found')
@@ -141,7 +160,7 @@ function getCourses(res, uri) {
     });
 }
 
-function getCourseByUsername(res, uri) {
+function getCoursesByUsername(res, uri) {
     const client = new pg.Client(dbURL);
     const username = qs.parse(uri.query).username;
 
@@ -174,7 +193,7 @@ function getCourseByUsername(res, uri) {
     });
 }
 
-function getUserByCourseCode(res, uri) {
+function getUsersByCourseCode(res, uri) {
     const client = new pg.Client(dbURL);
     const courseCode = qs.parse(uri.query).courseCode;
     const filter = qs.parse(uri.query).filter;
@@ -244,14 +263,42 @@ function getUsers(res, uri) {
     });
 }
 
-function handleAdd(res, name, pic) {
-    var client = new pg.Client(dbURL);
+function logIn(res, username, password) {
+    const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
             console.log('Connect to db failed')
             console.error(err);
         } else {
-            var query = "INSERT INTO puppies VALUES ('" + upperFirstLet(name) + "', '" + pic + "');";
+            const query = `SELECT password FROM users WHERE username = '${username}';`;
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    const response = JSON.parse(JSON.stringify(result.rows[0]));
+                    if (response.password === password) {
+                        res.writeHead(200, {"Content-type": "application/json"});
+                        res.end();
+                    } else {
+                        res.writeHead(400, {"Content-type": "text/plain"});
+                        res.end(JSON.stringify({message: upperFirstLet("Wrong username or password")}));
+                    }
+                }
+            });
+        }
+    });
+}
+
+function addToCoursesDb(res, courseCode, name) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed')
+            console.error(err);
+        } else {
+            const query = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
@@ -266,54 +313,64 @@ function handleAdd(res, name, pic) {
     });
 }
 
-function s3get(res, uri) {
-    const s3 = new aws.S3();
-    const fileName = qs.parse(uri.query).fileName;
-
-    const s3Params = {
-        Bucket: S3_BUCKET,
-        Key: fileName,
-        Expires: 60
-    };
-
-    s3.getSignedUrl('getObject', s3Params, (err, data) => {
-        if(err){
-            res.writeHead(500, {"Content-type": "text/plain"});
-            return res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+function addToEnrollmentsDb(res, courseCode, username) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.log('Connect to db failed')
+            console.error(err);
+        } else {
+            const query = `INSERT INTO enrollments VALUES ('${courseCode}', '${username}');`;
+            client.query(query, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    res.writeHead(200, {"Content-type": "application/json"});
+                    res.end();
+                }
+            });
         }
-        const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        };
-    res.write(JSON.stringify(returnData));
-    res.end();
-});
+    });
 }
 
 function s3put(res, uri) {
     const s3 = new aws.S3();
     const fileName = qs.parse(uri.query).fileName;
-    const fileType = qs.parse(uri.query).fileType;
     const s3Params = {
         Bucket: S3_BUCKET,
-        Key: fileName,
-        Expires: 60,
-        ContentType: fileType,
-        ACL: 'public-read'
+        Key: fileName
     };
 
-    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    s3.putObject(s3Params, (err, data) => {
         if(err){
             res.writeHead(500, {"Content-type": "text/plain"});
-            return res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+            res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+        } else {
+            res.writeHead(200, {"Content-type": "application/json"});
+            res.end();
         }
-        const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        };
-    res.write(JSON.stringify(returnData));
-    res.end();
-});
+    });
+}
+
+function s3delete(res, uri) {
+    const s3 = new aws.S3();
+    const fileName = qs.parse(uri.query).fileName;
+    const s3Params = {
+        Bucket: S3_BUCKET,
+        Key: fileName
+    };
+
+    s3.deleteObject(s3Params, (err, data) => {
+        if(err){
+            res.writeHead(500, {"Content-type": "text/plain"});
+            res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+        } else {
+            res.writeHead(200, {"Content-type": "application/json"});
+            res.end();
+        }
+    });
 }
 
 function sendFile(res, filename, contentType) {
