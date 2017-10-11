@@ -117,9 +117,8 @@ var timeoutHandle;
 function countdown() {
     var seconds = 20;
     function tick() {
-        var counter = document.getElementById("timer");
         seconds--;
-        counter.innerHTML = String(seconds);
+        document.getElementById("timer").innerHTML = String(seconds);
         if (seconds > 0) {
             timeoutHandle = setTimeout(tick, 1000);
         }
@@ -140,8 +139,7 @@ function countdown() {
 }
 countdown();
 
-function initGame() {
-    // Add event listeners to elements of page
-    document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
-    document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
-}
+
+// Add event listeners to elements of page
+document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
+document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
