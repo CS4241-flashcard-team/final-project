@@ -16,7 +16,7 @@ function getValues(xhr){
 	}
 
 	//Stubs for getting information
-	console.log("xhr is: "+xhr.username);
+	console.log(xhr.response);
 	document.getElementById("uname").innerText = xhr.username;
 	document.getElementById("first").innerText = xhr.firstname;
 	document.getElementById("last").innerText = xhr.lastname;
@@ -27,10 +27,44 @@ function getValues(xhr){
 
 
 function getProfileInfo(){
-	var xhr = new XMLHttpRequest();
+	/*var xhr = new XMLHttpRequest();
+	xhr.responseType = "json";
 	console.log("In getProfileInfo...");
+	xhr.open("GET", "/get?users&username=taylorSwift");
+	xhr.send();
+	xhr.onreadystatechange = function() {getValues(xhr)};
+	
+	*/
+	var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=users&username=taylorSwift", true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            console.log(this.response);
+			document.getElementById("uname").innerText = this.response.username;
+			document.getElementById("first").innerText = this.response.firstname;
+			document.getElementById("last").innerText = this.response.lastname;
+			document.getElementById("profileImg").src = this.response.picname;
+			document.getElementById("acctType").innerText = this.response.acctype;
+        }
+    };
+    xhr.send();
+	
+};
+
+function joinCourse(){
+	const data = {
+		target: '',
+		username: '',
+		pwd: '',
+		imgSrc: '',
+		
+	};
+	
 	xhr.open("GET", "/get?userByUsername&username=taylorSwift");
 	xhr.send();
 	xhr.onreadystatechange = function() {getValues(xhr)};
 	
-};
+}
+
+
