@@ -9,35 +9,60 @@
 
 ## Courses by username
 - **Required field**:
-    - target: courseByUsername
+    - target: coursesByUsername
     - username: ...
 - **Optional field**:
 - **Example**:
-    - /get?target=courses&username=my-username
+    - /get?target=coursesByUsername&username=my-username
 
 ## Users by courseCode
 - **Required field**:
-    - target: userByCourseCode
+    - target: usersByCourseCode
     - courseCode: ...
 - **Optional field**:
     - filter: student -> returns all students in that course
     - filter: professor -> returns the professor in that course
 - **Example**:
-    - /get?target=userByCourse&courseCode=my-code&filter=professor
+    - /get?target=usersByCourseCode&courseCode=my-code&filter=professor
 
 ## Users
 - **Required field**:
-    - target: userByUsername
+    - target: users
 - **Optional field**:
     - username: ...
 - **Example**:
-    - /get?target=userByUsername&username=my-username
+    - /get?target=users&username=my-username
 
 
 # POST
 ## Professor adds new course
-
+- **Required params**:
+    - target: addCourse
+    - courseCode: ...
+    - name: ...
+- **Optional params**:
+- **Example**:
+    - const data = {
+        target: 'addCourse',
+        courseCode: 'my-code,
+        name: 'my-username'
+    };
+    - /post
+    - xhr.send(JSON.stringify(data))
+    
 ## Student joins a course
-
+- **Required params**:
+    - target: addCourse
+    - courseCode: ...
+    - username: ...
+- **Optional params**:
+- **Example**:
+    - const data = {
+        target: 'addCourse',
+        courseCode: 'my-code,
+        username: 'my-username'
+    };
+    - /post
+    - xhr.send(JSON.stringify(data))
 
 # S3
