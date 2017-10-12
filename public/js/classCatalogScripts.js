@@ -4,9 +4,10 @@ function initCatalog() {
 }
 
 function getProf() {
+    const courseCode = window.sessionStorage.getItem('courseCode');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=professor", true);
+    xhr.open("GET", `/get?target=usersByCourseCode&courseCode=${courseCode}&filter=professor`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildProfList(this.response);
@@ -16,9 +17,10 @@ function getProf() {
 }
 
 function getAllStudents() {
+    const courseCode = window.sessionStorage.getItem('courseCode');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=student", true);
+    xhr.open("GET", `/get?target=usersByCourseCode&courseCode=${courseCode}&filter=student`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildStudentsList(this.response);

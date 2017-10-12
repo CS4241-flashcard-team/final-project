@@ -60,7 +60,7 @@ function getUserCourses() {
     const username = window.sessionStorage.getItem('username');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", `/get?target=courses&username=${username}`, true);
+    xhr.open("GET", `/get?target=coursesByUsername&username=${username}`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildFolder(this.response);
