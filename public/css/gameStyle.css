@@ -1,60 +1,55 @@
 body, h1 {
     font-family: "Roboto Slab", "Dosis", sans-serif;
-    }
-    h1{
-        display: block;
-        width: 100%;
-        text-align: center;
-        background-color: black;
-        padding: 20px;
-    }
-    h2{
-        font-family: "Roboto Slab", "Dosis", sans-serif;
-        font-size: 30px;
-        display: block;
-        padding-left: 30px;
-    }
-    h3{
-        font-size: 20px;
-        display: block;
-        padding-left: 30px;
-    }
-    #backBtn{
-        display: block;
-        margin: left;
-        background-color: rgb(95, 95, 95);
-        border-color: white;
-    }
-
-    #game_element{
-        display: block;
-        margin: auto;
-        text-align: center;
-    }
-
-    #game_zone{
-        display: block;
-        margin: auto;
-        width: 50%;
-        font-size: 16px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    #nextbtn{
-        display: block;
-        margin: auto;
-        margin-top: 30px;
-        padding: 20px;
-    }
-
-    #img_container{
-        display: block;
-        padding: 30px;
-    }
-
-    #quiz{
-        display: block;
-        width: 30%;
-        text-align: left;
-        margin: auto;
-    }
+}
+h1{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: black;
+    padding: 20px;
+}
+h2{
+    font-family: "Roboto Slab", "Dosis", sans-serif;
+    font-size: 30px;
+    display: block;
+    padding-left: 30px;
+}
+h3{
+    font-size: 20px;
+    display: block;
+    padding-left: 30px;
+}
+#backBtn{
+    display: block;
+    background-color: rgb(95, 95, 95);
+    border-color: white;
+}
+#game_element{
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+#game_zone{
+    display: block;
+    margin: auto;
+    width: 50%;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#nextbtn{
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+}
+#img_container{
+    display: block;
+    padding: 30px;
+}
+#quiz{
+    display: block;
+    width: 30%;
+    text-align: left;
+    margin: auto;
+}

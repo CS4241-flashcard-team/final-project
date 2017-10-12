@@ -4,13 +4,12 @@ var currentCourse = sessionStorage.getItem("courseCode");
 var aoq = [];
 // Array of students
 var aos = [];
-
-// Variable to keep
+// Variable to keep track of stuffs going on for game
 var choice = [];
 var currentQuestion = 0;
 var questionSize = 10;
 const maxQuestion = 10; // Update this to 10 later when everything works
-
+var timeoutHandle;
 
 // Get the list of students in current course
 function getStudentList() {
@@ -24,6 +23,7 @@ function getStudentList() {
             // Add event listeners to elements of page
             document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
             document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
+            countdown();
         }
     };
     xhr.send();
@@ -104,19 +104,20 @@ function prepareQuestion(question) {
 
 // Shuffle an array
 function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
+    var array_temp = array;
+    for (var i = array_temp.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        var temp = array_temp[i];
+        array_temp[i] = array_temp[j];
+        array_temp[j] = temp;
     }
-    return array;
+    return array_temp;
 }
 
 // Analyze the choice, check whether it is a correct choice
 function analyzeChoice() {
     // Get answer from choices
-    var ans = "";
+    var ans = " ";
     if (document.getElementById("c1").checked === true) {
         ans = document.getElementById("c1").value;
     } else if (document.getElementById("c2").checked === true) {
@@ -128,7 +129,9 @@ function analyzeChoice() {
     }
 
     // Decide whether it is correct
-    choice[currentQuestion] = ans;
+    if (ans !== " ") {
+        choice[currentQuestion] = ans;
+    } else choice[currentQuestion] = "No answer";
 
     // Update to next question
     if (currentQuestion < questionSize) {
@@ -173,7 +176,6 @@ function displayResult() {
 }
 
 // Countdown clock for the game
-var timeoutHandle;
 function countdown() {
     var seconds = 20;
     function tick() {
@@ -195,9 +197,7 @@ function countdown() {
                     countdown();
                 }
             }
-
         }
     }
     tick();
 }
-countdown();
