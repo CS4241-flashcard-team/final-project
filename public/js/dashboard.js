@@ -7,7 +7,7 @@ function joinCourse(){
     const data = {
         target: 'addCourse',
         courseCode: document.getElementById('selectCourse').value,
-        // username: document.getElementById('my-username').value
+        username: window.localStorage.getItem('username')
     };
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
@@ -19,6 +19,7 @@ function joinCourse(){
 
         if (this.status === 200) {
             console.log('yay');
+            getUserCourses();
         }
     };
     xhr.send(JSON.stringify(data));
