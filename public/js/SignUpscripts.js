@@ -53,6 +53,7 @@ function imgConfirm() {
 
 function signUp(event){
 	if (unameStatus && pwdConfirm() && imgConfirm()) {
+		event.preventDefault();
 		//pass in everything to be added to db, pwds match and uname is unique
         getS3PutSignedRequest();
 	}
@@ -114,7 +115,7 @@ function addUserToDb(fileName) {
 		accountType = document.getElementById("student").value;
 	}
 	else{	
-		accountType = document.getElelmentById("teacher").value;
+		accountType = document.getElementById("teacher").value;
 	}
 	
     var data = {
