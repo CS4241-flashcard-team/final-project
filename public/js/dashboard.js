@@ -94,8 +94,8 @@ var template = _.template(
     '</div>'+
 
     '<div class="modal-body">'+
-    '<button type="button" onclick="toGame()" class="btn btn-success btn-lg">Play</button>'+
-    '<button type="button" onclick="toCatalog()" class="btn btn-primary btn-lg">View Class</button>'+
+    `<button type="button" onclick="toGame('<%= code %>')" class="btn btn-success btn-lg">Play</button>`+
+    `<button type="button" onclick="toCatalog('<%= code %>')" class="btn btn-primary btn-lg">View Class</button>`+
     '</div>'+
 
     '</div>'+
@@ -127,15 +127,18 @@ function buildFolder(list) {
 
 function signOut(){
     console.log('signing out');
+    window.localStorage.clear();
     window.location.href = "index.html";
 }
 
-function toGame(){
+function toGame(courseCode){
     console.log('start playing');
+    window.sessionStorage.setItem('courseCode', courseCode);
     window.location.href = "game.html";
 }
 
-function toCatalog(){
+function toCatalog(courseCode){
     console.log('view all');
+    window.sessionStorage.setItem('courseCode', courseCode);
     window.location.href = "classCatalog.html";
 }
