@@ -113,13 +113,13 @@
     
 ## Student joins a course
 - **Required params**:
-    - target: addCourse
+    - target: joinCourse
     - courseCode: ...
     - username: ...
 - **Optional params**:
 - **Example**:
     - const data = {
-        target: 'addCourse',
+        target: 'joinCourse',
         courseCode: 'my-code,
         username: 'my-username'
     };

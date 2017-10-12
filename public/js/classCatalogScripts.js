@@ -1,6 +1,11 @@
 function initCatalog() {
+    initName();
     getAllStudents();
     getProf();
+}
+
+function initName() {
+    document.getElementById('classNameInCatalog').innerText = window.sessionStorage.getItem('courseCode');
 }
 
 function getProf() {

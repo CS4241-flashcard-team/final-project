@@ -3,11 +3,12 @@ function initDashboard() {
     getUserCourses();
     getProfileInfo(window.localStorage.getItem('username'));
 }
+
 function joinCourse(){
     const data = {
-        target: 'addCourse',
+        target: 'joinCourse',
         courseCode: document.getElementById('selectCourse').value,
-        // username: document.getElementById('my-username').value
+        username: window.localStorage.getItem('username')
     };
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
@@ -19,17 +20,23 @@ function joinCourse(){
 
         if (this.status === 200) {
             console.log('yay');
+            getUserCourses();
         }
     };
     xhr.send(JSON.stringify(data));
 }
 
 function createCourse(){
+    console.log(document.getElementById('createName').value)
+    console.log(document.getElementById('selectDept').value +'-'+ document.getElementById('courseID').value + '-' + document.getElementById('courseTerm').value + document.getElementById('createYear').value);
+    console.log(window.localStorage.getItem('username'));
     const data = {
         target: 'addCourse',
-        courseCode: document.getElementById('my-code').value,
-        username: document.getElementById('my-username').value
+        courseCode: document.getElementById('selectDept').value +'-'+ document.getElementById('courseID').value + '-' + document.getElementById('courseTerm').value + document.getElementById('createYear').value,
+        name: document.getElementById('createName').value,
+        username: window.localStorage.getItem('username')
     };
+
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("POST", "/post", true);
@@ -40,6 +47,7 @@ function createCourse(){
 
         if (this.status === 200) {
             console.log('yay');
+            buildFolder(this.response);
         }
     };
     xhr.send(JSON.stringify(data));
