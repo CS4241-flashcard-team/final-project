@@ -111,3 +111,8 @@ function profileChangePic(event){
 		return false;
 	}
 };
+
+function signOut(){
+    window.location.href = "index.html";
+	
+}
