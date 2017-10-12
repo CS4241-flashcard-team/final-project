@@ -47,6 +47,7 @@ function createCourse(){
 
         if (this.status === 200) {
             console.log('yay');
+            buildFolder(this.response);
         }
     };
     xhr.send(JSON.stringify(data));
