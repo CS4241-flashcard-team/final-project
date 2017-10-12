@@ -20,7 +20,7 @@ function joinCourse(){
 
         if (this.status === 200) {
             console.log('yay');
-            getUserCourses();
+            initDashboard();
         }
     };
     xhr.send(JSON.stringify(data));
@@ -47,7 +47,7 @@ function createCourse(){
 
         if (this.status === 200) {
             console.log('yay');
-            buildFolder(this.response);
+            initDashboard();
         }
     };
     xhr.send(JSON.stringify(data));
@@ -118,13 +118,13 @@ var templateCourse = _.template(
 var template = _.template(
     '<div class="col-sm-3">' +
 
-    `<button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#<%= code %>Modal">` +
+    '<button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#playModal">' +
     '<img id= "folder" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png" width="20"/>' +
     '</button>' +
 
     '<p><%= code %> <%= name %></p>' +
 
-    `<div class="modal fade" id="<%= code %>Modal" role="dialog">` +
+    '<div class="modal fade" id="playModal" role="dialog">' +
     '<div class="modal-dialog">' +
     '<div class="modal-content">' +
 
