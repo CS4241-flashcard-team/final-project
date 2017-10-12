@@ -4,6 +4,7 @@ var lName = "";
 var imgSrc = "";
 var actType = "";
 var pwd = "";
+var localKey = "";
 
 function getProfileInfo(localuser){
 	var xhr = new XMLHttpRequest();
@@ -12,6 +13,7 @@ function getProfileInfo(localuser){
     xhr.onload = function() {
         if (this.status === 200) {
             console.log(this.response);
+			localKey = localuser;
 			uName = this.response[0].username;
 			fName = this.response[0].firstname;
 			lName = this.response[0].lastname;
@@ -39,13 +41,14 @@ function profileChangePwd(event){
 		
 		return false;
 	}
-	else if(document.getElementById("passwordFirst").value != "" && document.getElementByid("passwordConf").value != ""){
+	else if(document.getElementById("passwordFirst").value != "" && document.getElementById("passwordConf").value != ""){
 		const data = {
 			target: 'updateUser',
-			username: uname,
+			password: document.getElementById("passwordFirst"),
+			username: uName,
 			firstname: fName,
 			lastname: lName,
-			picname: document.getElementById("profPic").value,
+			picname: imgSrc,
 			acctype: actType			
 		};
 		var xhr = new XMLHttpRequest();
@@ -53,7 +56,7 @@ function profileChangePwd(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-				getProfileInfo();
+				getProfileInfo(localKey);
 			}
 		};
 		xhr.send(JSON.stringify(data));	
@@ -67,7 +70,8 @@ function profileChangeName(event){
 		
 		const data = {
 			target: 'updateUser',
-			username: uname,
+			username: uName,
+			password: pwd,
 			firstname: document.getElementById("firstName").value,
 			lastname: document.getElementById("lastName").value,
 			picname: imgSrc,
@@ -78,12 +82,13 @@ function profileChangeName(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-			   getProfileInfo();
+			   getProfileInfo(localKey);
 			}
 		};
+		
+		console.log(JSON.stringify(data));
+		
 		xhr.send(JSON.stringify(data));	
-				
-		return false;
 	}
 };
 
@@ -93,7 +98,8 @@ function profileChangePic(event){
 		
 		const data = {
 			target: 'updateUser',
-			username: uname,
+			username: uName,
+			password: pwd,
 			firstname: fName,
 			lastname: lName,
 			picname: document.getElementById("profPic").value,
@@ -104,11 +110,10 @@ function profileChangePic(event){
 		xhr.open("POST", "/post");
 		xhr.onload = function() {
 			if (this.status === 200) {
-			   getProfileInfo();
+			   getProfileInfo(localKey);
 			}
 		};
 		xhr.send(JSON.stringify(data));	
-		return false;
 	}
 };
 
