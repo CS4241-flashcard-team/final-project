@@ -1,3 +1,7 @@
+function initDashboard() {
+    getAllCourses();
+    getUserCourses();
+}
 function joinCourse(){
     const data = {
         target: 'addCourse',
@@ -53,9 +57,10 @@ function getAllCourses() {
 }
 
 function getUserCourses() {
+    const username = window.sessionStorage.getItem('username');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=coursesByUsername&username=my-username", true);
+    xhr.open("GET", `/get?target=courses&username=${username}`, true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildFolder(this.response);
@@ -89,8 +94,8 @@ var template = _.template(
     '</div>'+
 
     '<div class="modal-body">'+
-    '<button type="button" onclick="toGame()" class="btn btn-success btn-lg">Play</button>'+
-    '<button type="button" onclick="toCatalog()" class="btn btn-primary btn-lg">View Class</button>'+
+    `<button type="button" onclick="toGame('<%= code %>')" class="btn btn-success btn-lg">Play</button>`+
+    `<button type="button" onclick="toCatalog('<%= code %>')" class="btn btn-primary btn-lg">View Class</button>`+
     '</div>'+
 
     '</div>'+
@@ -101,7 +106,6 @@ var template = _.template(
 ); 
 
 function buildCourseJoin(list) {
-    console.log("here");
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
         toAppendString += templateCourse(list[i]);
@@ -110,6 +114,7 @@ function buildCourseJoin(list) {
 }
 
 function buildFolder(list) {
+    console.log(list);
     console.log("here");
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
@@ -122,15 +127,18 @@ function buildFolder(list) {
 
 function signOut(){
     console.log('signing out');
+    window.localStorage.clear();
     window.location.href = "index.html";
 }
 
-function toGame(){
+function toGame(courseCode){
     console.log('start playing');
+    window.sessionStorage.setItem('courseCode', courseCode);
     window.location.href = "game.html";
 }
 
-function toCatalog(){
+function toCatalog(courseCode){
     console.log('view all');
+    window.sessionStorage.setItem('courseCode', courseCode);
     window.location.href = "classCatalog.html";
 }

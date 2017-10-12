@@ -134,7 +134,8 @@ function addUserToDb(fileName) {
         if (this.status === 200) {
             // TODO: do sth when success
         	console.log("YAYYYYY")
-
+            window.localStorage.setItem('username', document.getElementById('username').value);
+            window.location.href = "dashboard.html";
         } else {
             // TODO: do sth when error
             console.log("add fail. cry")

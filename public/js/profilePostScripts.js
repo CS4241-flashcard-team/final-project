@@ -118,6 +118,6 @@ function profileChangePic(event){
 };
 
 function signOut(){
+    window.localStorage.clear();
     window.location.href = "index.html";
-	
 }
