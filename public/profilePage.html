@@ -35,20 +35,17 @@
   
   <body onload="getProfileInfo(localStorage.getItem('username'))">
 	<h1>Game of Faces: Your Profile</h1>
-	<div id= "content" class="container-fluid">
-		
-		<div id = "sideNav" class = "col-sm-1 text-left">
-		<ul class = "nav nav-pills nav-stacked sidenav">
-		<li class="active"><a href="#">Your Profile</a></li>
-		<li><a href="index.html">Home Page</a></li>
-		<li onclick= "signOut()"><a>Sign Out</a></li>
-		
-		</ul>
-		</div>
-	
-		<div class = "col-sm-1"></div>
-	
-		<div class = "col-sm-8 center-block text-center">
+
+		<nav class="navbar navbar-inverse justify-content-center">
+			<div class="navContainer">
+				<ul class="nav navbar-nav">
+					<li><a href="dashboard.html">Dashboard</a></li>
+					<li class="active"><a href="#">Your Profile</a></li>
+					<li onclick= "signOut()"><a>Sign Out</a></li>
+				</ul>
+			</div>
+		</nav>
+
 			<div class= "body">
 			<div>
 			<h2>Your Information</h2>
@@ -110,9 +107,8 @@
 				</div>
 			</div>
 			</div>
-		</div>
-		<div class="col-sm-2"> </div>
-	</div><!--container-->
+
+
  
   </body>
 </html>
