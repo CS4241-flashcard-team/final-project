@@ -8,7 +8,7 @@ var aos = [];               // Array of students
 var choice = [];            // Global array, save choice made during game
 var currentQuestion = 0;    // Global variable, acts as itirator
 var questionSize = 10;      // Default value, change if question is less than 10
-var maxSeconds = 20;         // Default value, change according to difficulty
+var maxSeconds = 21;         // Default value, change according to difficulty
 const maxQuestion = 10;     // Update this to 10 later when everything works
 var timeoutHandle;          // Variable for timeout handling
 
@@ -18,10 +18,10 @@ switch (difficulty) {
         maxSeconds = 21;
         break;
     case "normal":
-        maxSeconds = 16;
+        maxSeconds = 11;
         break;
     case "hard":
-        maxSeconds = 11;
+        maxSeconds = 6;
         break;
     default:
         maxSeconds = 21;
@@ -162,10 +162,18 @@ function analyzeChoice() {
             countdown();
         }
     }
+
+    // Play sound
+    document.getElementById("click").play();
 }
 
 // Display result and hide everything else
 function displayResult() {
+    // Stop background music
+    document.getElementById("game_music").pause();
+    document.getElementById("game_music").currentTime = 0;
+    // Play sound to indicate success completing test
+    document.getElementById("end").play();
     // Show result screen
     document.getElementById("result_screen").removeAttribute("hidden");
 
@@ -198,10 +206,12 @@ function countdown() {
     function tick() {
         seconds--;
         document.getElementById("timer").innerHTML = String(seconds);
+        document.getElementById("tick").play();
         if (seconds > 0) {
             timeoutHandle = setTimeout(tick, 1000);
         }
         if (seconds === 0) {
+            document.getElementById("error").play();
             choice[currentQuestion] = false;
             if (currentQuestion < questionSize) {
                 currentQuestion++;

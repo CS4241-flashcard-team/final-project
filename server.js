@@ -96,6 +96,21 @@ var server = http.createServer(function (req, res) {
         case '/blank.jpg':
             sendFile(res, 'public/blank.jpg')
             break
+        case '/audio/tick.mp3':
+            sendFile(res, 'public/audio/tick.mp3')
+            break
+        case '/audio/game.mp3':
+            sendFile(res, 'public/audio/game.mp3')
+            break
+        case '/audio/click.wav':
+            sendFile(res, 'public/audio/click.wav')
+            break
+        case '/audio/error.mp3':
+            sendFile(res, 'public/audio/error.mp3')
+            break
+        case '/audio/end.mp3':
+            sendFile(res, 'public/audio/end.mp3')
+            break
         case '/css/style.css':
             sendFile(res, 'public/css/style.css', 'text/css')
             break
