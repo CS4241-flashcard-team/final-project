@@ -16,8 +16,8 @@ const maxQuestion = 10; // Update this to 10 later when everything works
 function getStudentList() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=student", true);
-    //xhr.open("GET", "/get?target=usersByCourseCode&courseCode="+currentCourse+"&filter=student", true);
+    //xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=student", true);
+    xhr.open("GET", "/get?target=usersByCourseCode&courseCode="+currentCourse+"&filter=student", true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildStudentsList(this.response);
