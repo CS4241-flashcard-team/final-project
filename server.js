@@ -153,7 +153,6 @@ function getCourses(res, uri) {
 
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed');
             console.error(err);
         } else {
             client.query(query, function (err, result) {
@@ -176,7 +175,6 @@ function getCoursesByUsername(res, uri) {
     const username = qs.parse(uri.query).username;
 
     if (typeof username === 'undefined') {
-        console.log("Username is empty");
         res.writeHead(500, {"Content-type": "text/plain"});
         res.end(JSON.stringify({message: upperFirstLet("Username is empty")}));
         return;
@@ -186,7 +184,6 @@ function getCoursesByUsername(res, uri) {
 
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed');
             console.error(err);
         } else {
             client.query(query, function (err, result) {
@@ -210,7 +207,6 @@ function getUsersByCourseCode(res, uri) {
     const filter = qs.parse(uri.query).filter;
 
     if (typeof courseCode === 'undefined') {
-        console.log("Course code is empty");
         res.writeHead(500, {"Content-type": "text/plain"});
         res.end(JSON.stringify({message: upperFirstLet("Course code is empty")}));
         return;
@@ -226,7 +222,6 @@ function getUsersByCourseCode(res, uri) {
 
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed');
             console.error(err);
         } else {
             client.query(query, function (err, result) {
@@ -256,7 +251,6 @@ function getUsers(res, uri) {
 
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed');
             console.error(err);
         } else {
             client.query(query, function (err, result) {
@@ -278,7 +272,6 @@ function logIn(res, username, password) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
             console.error(err);
         } else {
             const query = `SELECT password FROM users WHERE username = '${username}';`;
@@ -288,6 +281,12 @@ function logIn(res, username, password) {
                     res.writeHead(500, {"Content-type": "text/plain"});
                     res.end(JSON.stringify({message: upperFirstLet(err.message)}));
                 } else {
+                    if (result.rows.length === 0) {
+                        res.writeHead(400, {"Content-type": "text/plain"});
+                        res.end(JSON.stringify({message: upperFirstLet("Wrong username or password")}));
+                        return;
+                    }
+
                     const response = JSON.parse(JSON.stringify(result.rows[0]));
                     if (response.password === password) {
                         res.writeHead(200, {"Content-type": "application/json"});
@@ -306,7 +305,6 @@ function addNewUser(res, username, password, firstname, lastname, picname, accty
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
             console.error(err);
         } else {
             const query = `INSERT INTO users VALUES ('${username}', '${password}', '${upperFirstLet(firstname)}', '${upperFirstLet(lastname)}', '${picname}', '${acctype}');`;
@@ -328,7 +326,6 @@ function updateUser(res, username, password, firstname, lastname, picname, accty
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
             console.error(err);
         } else {
             const query = `UPDATE users SET password='${password}', firstname='${upperFirstLet(firstname)}', lastname='${upperFirstLet(lastname)}', picname='${picname}', acctype='${acctype}' WHERE username='${username}';`;
@@ -350,7 +347,6 @@ function addToCoursesDb(res, courseCode, name) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
             console.error(err);
         } else {
             const query = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
@@ -372,7 +368,6 @@ function addToEnrollmentsDb(res, courseCode, username) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
-            console.log('Connect to db failed')
             console.error(err);
         } else {
             const query = `INSERT INTO enrollments VALUES ('${courseCode}', '${username}');`;

@@ -5,10 +5,10 @@ var imgSrc = "";
 var actType = "";
 var pwd = "";
 
-function getProfileInfo(){
+function getProfileInfo(localuser){
 	var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("GET", "/get?target=users&username=taylorSwift", true);
+    xhr.open("GET", "/get?target=users&username="+localuser, true);
     xhr.onload = function() {
         if (this.status === 200) {
             console.log(this.response);
