@@ -97,7 +97,7 @@ function getProfileInfo(localuser){
             console.log(actType);
             pwd = this.response[0].password;
             // Display the correct button for each type of account
-            if(actType === "professor"){
+            if(actType === "professor" || actType === "Professor"){
                 console.log(actType);
                 console.log("create button");
                 document.getElementById("createBtn").style.display = ''
