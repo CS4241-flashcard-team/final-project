@@ -114,6 +114,7 @@ function getProfileInfo(localuser){
 var templateCourse = _.template(
     '<option>' +
     '<%= code %>' +
+	':  <%= name %>'+
     '</option>' 
 );
 
