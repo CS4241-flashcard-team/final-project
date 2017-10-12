@@ -36,17 +36,27 @@ function getProfileInfo(localuser){
 };
 
 function profileChangePwd(event){
+	if(pwd != document.getElementById("pwdOld").value){
+		document.getElementById("pwdCheck").style.backgroundColor = '#FF7777';
+		document.getElementById("pwdCheck").innerText ='Wrong Password!';
+		event.preventDefault();
+		return false;
+	}
+	
 	//check if old password == entered password
 	if(document.getElementById("passwordFirst").value == "" && document.getElementById("passwordConf").value == ""){
+		document.getElementById("pwdCheck").innerText ='';
 		return false;
 	}
 	if(!pwdConfirm()){
 		document.getElementById("pwdComp").style.backgroundColor = '#FF7777';
+		document.getElementById("pwdCheck").innerText ='';
 		event.preventDefault();
 		
 		return false;
 	}
 	else {
+		document.getElementById("pwdCheck").innerText ='';
 		event.preventDefault();
 		const data = {
 			target: 'updateUser',
@@ -70,6 +80,7 @@ function profileChangePwd(event){
 		document.getElementsByTagName("form")[0].reset();
 		document.getElementsByTagName("form")[1].reset();
 		document.getElementsByTagName("form")[2].reset();
+		document.getElementById("profPic").src = "#";
 		xhr.send(JSON.stringify(data));	
 	}
 };
@@ -101,6 +112,7 @@ function profileChangeName(event){
 		document.getElementsByTagName("form")[0].reset();
 		document.getElementsByTagName("form")[1].reset();
 		document.getElementsByTagName("form")[2].reset();
+		document.getElementById("profPic").src = "#";
 		xhr.send(JSON.stringify(data));	
 	}
 };
