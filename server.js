@@ -399,7 +399,6 @@ function s3put(res, uri) {
 
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
         if(err){
-            console.log("SOMETHING WRONG")
             res.writeHead(500, {"Content-type": "text/plain"});
             return res.end(JSON.stringify({message: upperFirstLet(err.message)}));
         }
