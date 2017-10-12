@@ -19,7 +19,6 @@ function joinCourse(){
         }
 
         if (this.status === 200) {
-            console.log('yay');
             initDashboard();
         }
     };
@@ -27,9 +26,6 @@ function joinCourse(){
 }
 
 function createCourse(){
-    console.log(document.getElementById('createName').value)
-    console.log(document.getElementById('selectDept').value +'-'+ document.getElementById('courseID').value + '-' + document.getElementById('courseTerm').value + document.getElementById('createYear').value);
-    console.log(window.localStorage.getItem('username'));
     const data = {
         target: 'addCourse',
         courseCode: document.getElementById('selectDept').value +'-'+ document.getElementById('courseID').value + '-' + document.getElementById('courseTerm').value + document.getElementById('createYear').value,
@@ -46,9 +42,15 @@ function createCourse(){
         }
 
         if (this.status === 200) {
-            console.log('yay');
             initDashboard();
         }
+
+        // clear and close modal
+        document.getElementById('createName').value = '';
+        document.getElementById('selectDept').value = 'AR';
+        document.getElementById('courseID').value = '';
+        document.getElementById('courseTerm').value = 'A';
+        document.getElementById('createYear').value = '';
     };
     xhr.send(JSON.stringify(data));
 }
@@ -118,13 +120,13 @@ var templateCourse = _.template(
 var template = _.template(
     '<div class="col-sm-3">' +
 
-    '<button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#playModal">' +
+    '<button id="modalBtn" class="btn btn-default" data-toggle="modal" data-target="#<%= code %>Modal">' +
     '<img id= "folder" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png" width="20"/>' +
     '</button>' +
 
     '<p><%= code %> <%= name %></p>' +
 
-    '<div class="modal fade" id="playModal" role="dialog">' +
+    '<div class="modal fade" id="<%= code %>Modal" role="dialog">' +
     '<div class="modal-dialog">' +
     '<div class="modal-content">' +
 
@@ -158,7 +160,6 @@ function buildFolder(list) {
     for (i = 0; i < list.length; i++) {
         toAppendString += template(list[i]);
     }
-    console.log(toAppendString);
     document.querySelector("#courseRow").innerHTML = toAppendString;
     console.log(document.querySelector("#courseRow"))
 }
