@@ -98,29 +98,97 @@ function profileChangeName(event){
 	}
 };
 
-function profileChangePic(event){
-	if(document.getElementById("profPic").value != ""){
-		event.preventDefault();
-		
-		const data = {
-			target: 'updateUser',
-			username: uName,
-			password: pwd,
-			firstname: fName,
-			lastname: lName,
-			picname: document.getElementById("profPic").value,
-			acctype: actType			
-		};
-		var xhr = new XMLHttpRequest();
-		xhr.responseType = "json";
-		xhr.open("POST", "/post");
-		xhr.onload = function() {
-			if (this.status === 200) {
-			   getProfileInfo(localKey);
-			}
-		};
-		xhr.send(JSON.stringify(data));	
-	}
+function profileChangePic(event) {
+    if(document.getElementById("profPic").value != "") {
+        event.preventDefault();
+       deleteFromS3();
+    }
+}
+
+function deleteFromS3() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/s3?action=delete&fileName=${imgSrc}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("done get signed")
+                getSignedReqToPutS3();
+            }
+            else {
+                // error
+                console.log('ERROR PUT S3')
+            }
+        }
+    };
+    xhr.send();
+}
+
+function getSignedReqToPutS3() {
+    const file = document.getElementById('profPic').files[0];
+    var fileName;
+
+    if (file.type == 'image/png') {
+        fileName = `${uName}.png`
+    } else {
+        fileName = `${uName}.jpg`
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/s3?action=put&fileName=${fileName}&fileType=${file.type}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("done get signed")
+                const response = JSON.parse(xhr.responseText);
+                addImageToS3(file, imgSrc, response.signedRequest);
+            }
+            else {
+                // error
+                console.log('ERROR PUT S3')
+            }
+        }
+    };
+    xhr.send();
+}
+
+function addImageToS3(file, fileName, signedRequest) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+            	console.log("done add s3")
+				updateImageDb(fileName)
+            }
+            else{
+                // error
+                console.log("error add image")
+            }
+        }
+    };
+    xhr.send(file);
+}
+
+function updateImageDb(fileName){
+	const data = {
+		target: 'updateUser',
+		username: uName,
+		password: pwd,
+		firstname: fName,
+		lastname: lName,
+		picname: fileName,
+		acctype: actType
+	};
+
+	var xhr = new XMLHttpRequest();
+	xhr.responseType = "json";
+	xhr.open("POST", "/post");
+	xhr.onload = function() {
+		if (this.status === 200) {
+			getProfileInfo(localKey);
+		}
+	};
+	xhr.send(JSON.stringify(data));
 };
 
 function signOut(){

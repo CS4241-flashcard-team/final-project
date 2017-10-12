@@ -71,8 +71,9 @@ var server = http.createServer(function (req, res) {
             const action = qs.parse(uri.query).action;
             if (action === 'put') {
                 s3put(res, uri);
-            } else {
-                console.log("Unknown s3 action")
+            }
+            if (action === 'delete') {
+                s3delete(res, uri);
             }
             break;
         case '/profilePage.html':
