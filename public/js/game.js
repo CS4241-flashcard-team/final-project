@@ -117,7 +117,7 @@ function shuffleArray(array) {
 // Analyze the choice, check whether it is a correct choice
 function analyzeChoice() {
     // Get answer from choices
-    var ans = "";
+    var ans = " ";
     if (document.getElementById("c1").checked === true) {
         ans = document.getElementById("c1").value;
     } else if (document.getElementById("c2").checked === true) {
@@ -129,9 +129,9 @@ function analyzeChoice() {
     }
 
     // Decide whether it is correct
-    if (ans !== "") {
+    if (ans !== " ") {
         choice[currentQuestion] = ans;
-    } else choice[currentQuestion] = "Time Out!";
+    } else choice[currentQuestion] = "No answer";
 
     // Update to next question
     if (currentQuestion < questionSize) {
