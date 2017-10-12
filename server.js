@@ -152,7 +152,7 @@ function getCourses(res, uri) {
     if (courseCode) {
         query += ` WHERE code = '${courseCode}'`;
     }
-    query += ";";
+    query += " ORDER BY code;";
 
     client.connect(function (err, client, done) {
         if (err) {
@@ -183,7 +183,7 @@ function getCoursesByUsername(res, uri) {
         return;
     }
 
-    var query = `SELECT * FROM courses INNER JOIN enrollments ON courses.code = enrollments.coursecode WHERE username = '${username}'`;
+    var query = `SELECT * FROM courses INNER JOIN enrollments ON courses.code = enrollments.coursecode WHERE username = '${username}' ORDER BY code`;
 
     client.connect(function (err, client, done) {
         if (err) {
@@ -393,10 +393,11 @@ function removeFromEnrollmentsDb(res, courseCode, username) {
         if (err) {
             console.error(err);
         } else {
-            const query = `DELETE FROM enrollments WHERE coursecode='${courseCode}' AND username='${username}');`;
+            const query = `DELETE FROM enrollments WHERE coursecode='${courseCode}' AND username='${username}';`;
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
+                    console.log(err.message)
                     res.writeHead(500, {"Content-type": "text/plain"});
                     res.end(JSON.stringify({message: upperFirstLet(err.message)}));
                 } else {

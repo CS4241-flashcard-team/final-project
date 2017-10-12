@@ -125,6 +125,7 @@ var template = _.template(
     '</button>' +
 
     '<p><%= code %> <%= name %></p>' +
+    `<button type="button" onclick="leaveCourse('<%= code %>')" class="btn btn-danger btn-lg">Leave</button>`+
 
     '<div class="modal fade" id="<%= code %>Modal" role="dialog">' +
     '<div class="modal-dialog">' +
@@ -145,7 +146,7 @@ var template = _.template(
     '</div>'+
 
     '</div>'
-); 
+);
 
 function buildCourseJoin(list) {
     var i, toAppendString = "";
@@ -162,6 +163,28 @@ function buildFolder(list) {
     }
     document.querySelector("#courseRow").innerHTML = toAppendString;
     console.log(document.querySelector("#courseRow"))
+}
+
+function leaveCourse(code) {
+    const data = {
+        target: 'unjoinCourse',
+        courseCode: code,
+        username: window.localStorage.getItem('username')
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("POST", "/post", true);
+    xhr.onload = function() {
+        if (this.status === 400) {
+            console.log(this.response.message);
+        }
+
+        if (this.status === 200) {
+            initDashboard();
+        }
+    };
+    xhr.send(JSON.stringify(data));
 }
 
 function signOut(){
