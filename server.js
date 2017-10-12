@@ -99,6 +99,9 @@ var server = http.createServer(function (req, res) {
         case '/favicon.ico':
             sendFile(res, 'public/favicon.ico')
             break
+        case '/game_banner.png':
+            sendFile(res, 'public/game_banner.png')
+            break
         case '/audio/tick.mp3':
             sendFile(res, 'public/audio/tick.mp3')
             break
