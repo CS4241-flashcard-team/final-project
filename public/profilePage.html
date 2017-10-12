@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="js/profilePostScripts.js"></script>
   </head>
   
-  <body onload="getProfileInfo()">
+  <body onload="getProfileInfo(localStorage.getItem('username'))">
 		<h1>Game of Faces: Your Profile</h1>
 	<div id= "content" class="container-fluid">
 		<div id = "sideNav" class = "col-sm-1 text-left">
