@@ -133,12 +133,31 @@ var template = _.template(
 
     '<div class="modal-header">' +
     '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
-    '<h4 class="modal-title">Course Name</h4>' +
+    '<h4 class="modal-title">Choose your action</h4>' +
     '</div>'+
 
     '<div class="modal-body">'+
-    `<button type="button" onclick="toGame('<%= code %>')" class="btn btn-success btn-lg">Play</button>`+
+    `<button type="button" data-dismiss="modal" data-toggle="modal" href="#<%= code %>ModalLevel" class="btn btn-success btn-lg">Play</button>`+
     `<button type="button" onclick="toCatalog('<%= code %>')" class="btn btn-primary btn-lg">View Class</button>`+
+    '</div>'+
+
+    '</div>'+
+    '</div>'+
+    '</div>'+
+
+    '<div class="modal fade" id="<%= code %>ModalLevel" role="dialog">' +
+    '<div class="modal-dialog">' +
+    '<div class="modal-content">'+
+
+    '<div class="modal-header">' +
+    '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
+    '<h4 class="modal-title">Choose difficulty</h4>' +
+    '</div>'+
+
+    '<div class="modal-body">'+
+    `<button type="button" onclick="toGame('<%= code %>', 'easy')" class="btn btn-success btn-lg">Easy</button>`+
+    `<button type="button" onclick="toGame('<%= code %>', 'normal')" class="btn btn-warning btn-lg">Normal</button>`+
+    `<button type="button" onclick="toGame('<%= code %>', 'hard')" class="btn btn-danger btn-lg">Hard</button>`+
     '</div>'+
 
     '</div>'+
@@ -193,9 +212,10 @@ function signOut(){
     window.location.href = "index.html";
 }
 
-function toGame(courseCode){
+function toGame(courseCode, difficulty){
     console.log('start playing');
     window.sessionStorage.setItem('courseCode', courseCode);
+    window.sessionStorage.setItem('difficulty', difficulty);
     window.location.href = "game.html";
 }
 

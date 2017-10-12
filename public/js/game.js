@@ -1,15 +1,31 @@
 // Current course
 var currentCourse = sessionStorage.getItem("courseCode");
-// Array of question - change it later
-var aoq = [];
-// Array of students
-var aos = [];
-// Variable to keep track of stuffs going on for game
-var choice = [];
-var currentQuestion = 0;
-var questionSize = 10;
-const maxQuestion = 10; // Update this to 10 later when everything works
-var timeoutHandle;
+var difficulty = sessionStorage.getItem("difficulty");
+
+
+var aoq = [];               // Array of question
+var aos = [];               // Array of students
+var choice = [];            // Global array, save choice made during game
+var currentQuestion = 0;    // Global variable, acts as itirator
+var questionSize = 10;      // Default value, change if question is less than 10
+var maxSeconds = 20;         // Default value, change according to difficulty
+const maxQuestion = 10;     // Update this to 10 later when everything works
+var timeoutHandle;          // Variable for timeout handling
+
+// Change maximum time according to difficulty
+switch (difficulty) {
+    case "easy":
+        maxSeconds = 21;
+        break;
+    case "normal":
+        maxSeconds = 16;
+        break;
+    case "hard":
+        maxSeconds = 11;
+        break;
+    default:
+        maxSeconds = 21;
+}
 
 // Get the list of students in current course
 function getStudentList() {
@@ -23,6 +39,7 @@ function getStudentList() {
             // Add event listeners to elements of page
             document.addEventListener('DOMContentLoaded', prepareQuestion(aoq[currentQuestion]), false);
             document.getElementById("nextbtn").addEventListener("click", analyzeChoice);
+            document.getElementById("timer").innerHTML = String(maxQuestion);
             countdown();
         }
     };
@@ -177,7 +194,7 @@ function displayResult() {
 
 // Countdown clock for the game
 function countdown() {
-    var seconds = 20;
+    var seconds = maxSeconds;
     function tick() {
         seconds--;
         document.getElementById("timer").innerHTML = String(seconds);
