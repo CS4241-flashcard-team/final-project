@@ -1,6 +1,7 @@
 function initDashboard() {
     getAllCourses();
     getUserCourses();
+    getProfileInfo(window.localStorage.getItem('username'));
 }
 function joinCourse(){
     const data = {
@@ -68,6 +69,37 @@ function getUserCourses() {
     };
     xhr.send();
 }
+
+var actType = "";
+
+function getProfileInfo(localuser){
+	var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("GET", "/get?target=users&username="+localuser, true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            console.log(this.response);
+			localKey = localuser;
+			uName = this.response[0].username;
+			fName = this.response[0].firstname;
+			lName = this.response[0].lastname;
+            actType = this.response[0].acctype;
+            console.log(actType);
+            pwd = this.response[0].password;
+            // Display the correct button for each type of account
+            if(actType === "professor"){
+                console.log(actType);
+                console.log("create button");
+                document.getElementById("createBtn").style.display = ''
+            }else{
+                console.log(actType);
+                console.log("join button");
+                document.getElementById("joinBtn").style.display = ''
+            }
+        }
+    };
+    xhr.send();
+};
 
 var templateCourse = _.template(
     '<option>' +
