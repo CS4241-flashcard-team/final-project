@@ -281,7 +281,7 @@ function logIn(res, username, password) {
                     res.writeHead(500, {"Content-type": "text/plain"});
                     res.end(JSON.stringify({message: upperFirstLet(err.message)}));
                 } else {
-                    if (result.rows.length) {
+                    if (result.rows.length === 0) {
                         res.writeHead(400, {"Content-type": "text/plain"});
                         res.end(JSON.stringify({message: upperFirstLet("Wrong username or password")}));
                         return;
@@ -399,6 +399,7 @@ function s3put(res, uri) {
 
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
         if(err){
+            console.log("SOMETHING WRONG")
             res.writeHead(500, {"Content-type": "text/plain"});
             return res.end(JSON.stringify({message: upperFirstLet(err.message)}));
         }
