@@ -101,6 +101,7 @@
     - target: addCourse
     - courseCode: ...
     - name: ...
+    - username: 
 - **Optional params**:
 - **Example**:
     - const data = {

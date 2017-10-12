@@ -4,6 +4,8 @@ function logIn(){
         username: document.getElementById('userName').value,
         password: document.getElementById('password').value
     };
+    var html;
+    var alert;
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("POST", "/post", true);
