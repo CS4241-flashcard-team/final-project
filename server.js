@@ -59,11 +59,13 @@ var server = http.createServer(function (req, res) {
                     updateUser(res, data.username, data.password, data.firstname, data.lastname, data.picname, data.acctype);
                 }
                 if (data.target === 'addCourse') {
-                    addToCoursesDb(res, data.courseCode, data.name);
-                    addToEnrollmentsDb(res, data.courseCode, data.username);
+                    addToCoursesDb(res, data.courseCode, data.name, data.username);
                 }
                 if (data.target === 'joinCourse') {
                     addToEnrollmentsDb(res, data.courseCode, data.username);
+                }
+                if (data.target === 'unjoinCourse') {
+                    removeFromEnrollmentsDb(res, data.courseCode, data.username);
                 }
             });
             break;
@@ -344,13 +346,33 @@ function updateUser(res, username, password, firstname, lastname, picname, accty
     });
 }
 
-function addToCoursesDb(res, courseCode, name) {
+function addToCoursesDb(res, courseCode, name, username) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
             console.error(err);
         } else {
-            const query = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
+            const query1 = `INSERT INTO courses VALUES ('${courseCode}', '${upperFirstLet(name)}');`;
+            client.query(query1, function (err, result) {
+                client.end();
+                if (err) {
+                    res.writeHead(500, {"Content-type": "text/plain"});
+                    res.end(JSON.stringify({message: upperFirstLet(err.message)}));
+                } else {
+                    addToEnrollmentsDb(res, courseCode, username);
+                }
+            });
+        }
+    });
+}
+
+function addToEnrollmentsDb(res, courseCode, username) {
+    const client = new pg.Client(dbURL);
+    client.connect(function (err, client, done) {
+        if (err) {
+            console.error(err);
+        } else {
+            const query = `INSERT INTO enrollments VALUES ('${courseCode}', '${username}');`;
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
@@ -365,13 +387,13 @@ function addToCoursesDb(res, courseCode, name) {
     });
 }
 
-function addToEnrollmentsDb(res, courseCode, username) {
+function removeFromEnrollmentsDb(res, courseCode, username) {
     const client = new pg.Client(dbURL);
     client.connect(function (err, client, done) {
         if (err) {
             console.error(err);
         } else {
-            const query = `INSERT INTO enrollments VALUES ('${courseCode}', '${username}');`;
+            const query = `DELETE FROM enrollments WHERE coursecode='${courseCode}' AND username='${username}');`;
             client.query(query, function (err, result) {
                 client.end();
                 if (err) {
