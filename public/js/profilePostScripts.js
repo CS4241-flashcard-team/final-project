@@ -34,18 +34,21 @@ function getProfileInfo(localuser){
 
 function profileChangePwd(event){
 	//check if old password == entered password
-	
+	if(document.getElementById("passwordFirst").value == "" && document.getElementById("passwordConf").value == ""){
+		return false;
+	}
 	if(!pwdConfirm()){
 		document.getElementById("pwdComp").style.backgroundColor = '#FF7777';
 		event.preventDefault();
 		
 		return false;
 	}
-	else if(document.getElementById("passwordFirst").value != "" && document.getElementById("passwordConf").value != ""){
+	else {
+		event.preventDefault();
 		const data = {
 			target: 'updateUser',
-			password: document.getElementById("passwordFirst"),
 			username: uName,
+			password: document.getElementById("passwordFirst").value,
 			firstname: fName,
 			lastname: lName,
 			picname: imgSrc,
@@ -59,6 +62,9 @@ function profileChangePwd(event){
 				getProfileInfo(localKey);
 			}
 		};
+		
+		console.log(JSON.stringify(data));
+		
 		xhr.send(JSON.stringify(data));	
 	}
 };
