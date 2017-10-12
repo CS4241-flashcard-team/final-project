@@ -57,7 +57,7 @@ function getAllCourses() {
 }
 
 function getUserCourses() {
-    const username = window.sessionStorage.getItem('username');
+    const username = window.localStorage.getItem('username');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("GET", `/get?target=coursesByUsername&username=${username}`, true);
@@ -114,8 +114,6 @@ function buildCourseJoin(list) {
 }
 
 function buildFolder(list) {
-    console.log(list);
-    console.log("here");
     var i, toAppendString = "";
     for (i = 0; i < list.length; i++) {
         toAppendString += template(list[i]);
