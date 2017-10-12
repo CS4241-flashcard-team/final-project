@@ -93,6 +93,9 @@ var server = http.createServer(function (req, res) {
         case '/dashboard.html':
             sendFile(res, 'public/dashboard.html')
             break
+        case '/blank.jpg':
+            sendFile(res, 'public/blank.jpg')
+            break
         case '/css/style.css':
             sendFile(res, 'public/css/style.css', 'text/css')
             break
