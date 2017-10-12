@@ -1,20 +1,5 @@
-// Example questions to test the code without database
-// var question1 = {
-//     answer: "pikachu",
-//     img: "https://i.ytimg.com/vi/iYyDbVUWgTI/hqdefault.jpg",
-//     choices: ["pikachu", "squirtle", "charmander", "bulbasaur"]
-// };
-// var question2 = {
-//     answer: "android",
-//     img: "http://www.jrtstudio.com/sites/default/files/ico_android.png",
-//     choices: ["android", "apple", "windows", "blackberry"]
-// };
-// var question3 = {
-//     answer: "25 / 5",
-//     img: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Dice-5.png",
-//     choices: ["1 + 3", "10 * 10", "25 / 5", "9 - 6"]
-// };
-
+// Current course
+var currentCourse = sessionStorage.getItem("courseCode");
 // Array of question - change it later
 var aoq = [];
 // Array of students
@@ -32,6 +17,7 @@ function getStudentList() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("GET", "/get?target=usersByCourseCode&courseCode=MU-101-A17&filter=student", true);
+    //xhr.open("GET", "/get?target=usersByCourseCode&courseCode="+currentCourse+"&filter=student", true);
     xhr.onload = function() {
         if (this.status === 200) {
             buildStudentsList(this.response);
@@ -64,7 +50,7 @@ function prepareArrayOfQuestions() {
             if (count === 3) break;
         }
         aoq[i] = tempq;
-        console.log(aoq);
+        //console.log(aoq);
     }
 }
 
@@ -80,7 +66,7 @@ function buildStudentsList(list) {
     }
     if (list.length > maxQuestion) {
         questionSize = maxQuestion;
-    } else questionSize = list.length
+    } else questionSize = list.length;
     prepareArrayOfQuestions();
 }
 
@@ -142,7 +128,7 @@ function analyzeChoice() {
     }
 
     // Decide whether it is correct
-    choice[currentQuestion] = (aoq[currentQuestion].answer === ans);
+    choice[currentQuestion] = ans;
 
     // Update to next question
     if (currentQuestion < questionSize) {
@@ -169,10 +155,20 @@ function displayResult() {
 
     // Insert result into table
     for (i = 0; i < questionSize; i++) {
-        document.getElementById("no"+ (i+1).toString()).innerHTML = i;
-        document.getElementById("img"+(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />"
+        document.getElementById("no"+ (i+1).toString()).innerHTML = i + 1;
+        document.getElementById("img" +(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />";
         document.getElementById("ca"+ (i+1).toString()).innerHTML = aoq[i].answer;
         document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
+        if (aoq[i].answer === choice[i]) {
+        } else {
+            document.getElementById("tab" + (i+1).toString()).style.backgroundColor = "#ffb3b3";
+            document.getElementById("tab" + (i+1).toString()).onmouseover = function () {
+                this.style.backgroundColor = "#ff9999";
+            };
+            document.getElementById("tab" + (i+1).toString()).onmouseout = function () {
+                this.style.backgroundColor = "#ffb3b3";
+            }
+        }
     }
 }
 
