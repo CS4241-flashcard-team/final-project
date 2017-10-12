@@ -26,6 +26,9 @@ function getProfileInfo(localuser){
 			document.getElementById("last").innerText = lName;
 			document.getElementById("profileImg").src = "https://s3.amazonaws.com/cs4241-fp/"+imgSrc;
 			document.getElementById("acctType").innerText = actType;
+			
+			document.getElementById("firstName").value = fName;
+			document.getElementById("lastName").value = lName;
         }
     };
     xhr.send();
@@ -64,7 +67,9 @@ function profileChangePwd(event){
 		};
 		
 		console.log(JSON.stringify(data));
-		
+		document.getElementsByTagName("form")[0].reset();
+		document.getElementsByTagName("form")[1].reset();
+		document.getElementsByTagName("form")[2].reset();
 		xhr.send(JSON.stringify(data));	
 	}
 };
@@ -93,7 +98,9 @@ function profileChangeName(event){
 		};
 		
 		console.log(JSON.stringify(data));
-		
+		document.getElementsByTagName("form")[0].reset();
+		document.getElementsByTagName("form")[1].reset();
+		document.getElementsByTagName("form")[2].reset();
 		xhr.send(JSON.stringify(data));	
 	}
 };
@@ -119,6 +126,11 @@ function profileChangePic(event){
 			   getProfileInfo(localKey);
 			}
 		};
+		
+		document.getElementsByTagName("form")[0].reset();
+		document.getElementsByTagName("form")[1].reset();
+		document.getElementsByTagName("form")[2].reset();
+		
 		xhr.send(JSON.stringify(data));	
 	}
 };
