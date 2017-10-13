@@ -128,3 +128,8 @@
     - xhr.send(JSON.stringify(data))
 
 ## S3
+- **Put new image**:
+    - xhr.open(`GET`, `/s3?action=put&fileName=${fileName}&fileType=${fileType}`);
+
+- **Delete image**:
+    - xhr.open(`GET`, `/s3?action=delete&fileName=${fileName}`);
