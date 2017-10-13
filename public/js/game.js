@@ -91,7 +91,13 @@ function buildStudentsList(list) {
     if (list.length > maxQuestion) {
         questionSize = maxQuestion;
     } else questionSize = list.length;
-    prepareArrayOfQuestions();
+    // Prevent case of empty class
+    if (list.length < 4) {
+        echo ("<SCRIPT LANGUAGE='JavaScript'>;" +
+            "window.alert('Class is too small to play! Back to Dashboard...');" +
+            "window.location.href='dashboard.html';" +
+            "</SCRIPT>");
+    } else prepareArrayOfQuestions();
 }
 
 // Prepare question from the struct 'question' passed in
