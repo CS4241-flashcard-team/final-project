@@ -93,10 +93,11 @@ function buildStudentsList(list) {
     } else questionSize = list.length;
     // Prevent case of empty class
     if (list.length < 4) {
-        echo ("<SCRIPT LANGUAGE='JavaScript'>;" +
-            "window.alert('Class is too small to play! Back to Dashboard...');" +
-            "window.location.href='dashboard.html';" +
-            "</SCRIPT>");
+        var ask = window.confirm("Class is too small to play. Do you want to go back?");
+        if (ask) {
+            window.alert("Redirecting back to Dashboard!");
+            window.location.href = "dashboard.html";
+        }
     } else prepareArrayOfQuestions();
 }
 
