@@ -1,10 +1,3 @@
-function checkLoggedIn() {
-    if (localStorage.getItem("username") === null) {
-        window.location.href = "/index.html";
-    }
-}
-checkLoggedIn();
-
 // Current course
 var currentCourse = sessionStorage.getItem("courseCode");
 var difficulty = sessionStorage.getItem("difficulty");
@@ -91,13 +84,9 @@ function buildStudentsList(list) {
     if (list.length > maxQuestion) {
         questionSize = maxQuestion;
     } else questionSize = list.length;
-    // Prevent case of empty class
     if (list.length < 4) {
-        var ask = window.confirm("Class is too small to play. Do you want to go back?");
-        if (ask) {
-            window.alert("Redirecting back to Dashboard!");
-            window.location.href = "dashboard.html";
-        }
+        document.getElementById("game_element").innerHTML = "<h2>Class is too small to play. Sorry!</h2>";
+        document.getElementById("game_zone").style.visibility = "hidden";
     } else prepareArrayOfQuestions();
 }
 
