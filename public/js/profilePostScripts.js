@@ -1,3 +1,10 @@
+function checkLoggedIn() {
+    if (localStorage.getItem("username") === null) {
+        window.location.href = "/index.html";
+    }
+}
+checkLoggedIn();
+
 var uName = "";
 var fName = "";
 var lName = "";
@@ -73,6 +80,8 @@ function profileChangePwd(event){
 		xhr.onload = function() {
 			if (this.status === 200) {
 				getProfileInfo(localKey);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
 			}
 		};
 		
@@ -105,6 +114,8 @@ function profileChangeName(event){
 		xhr.onload = function() {
 			if (this.status === 200) {
 			   getProfileInfo(localKey);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
 			}
 		};
 		
@@ -159,7 +170,7 @@ function getSignedReqToPutS3() {
             if (xhr.status === 200) {
                 console.log("done get signed")
                 const response = JSON.parse(xhr.responseText);
-                addImageToS3(file, imgSrc, response.signedRequest);
+                addImageToS3(file, fileName, response.signedRequest);
             }
             else {
                 // error
@@ -205,6 +216,10 @@ function updateImageDb(fileName){
 	xhr.onload = function() {
 		if (this.status === 200) {
 			getProfileInfo(localKey);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            document.getElementById("profile").src = "blank.jpg";
+            document.getElementById('profPic').value = '';
 		}
 	};
 	xhr.send(JSON.stringify(data));

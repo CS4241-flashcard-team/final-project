@@ -1,3 +1,10 @@
+function checkLoggedIn() {
+    if (localStorage.getItem("username") === null) {
+        window.location.href = "/index.html";
+    }
+}
+checkLoggedIn();
+
 // Current course
 var currentCourse = sessionStorage.getItem("courseCode");
 var difficulty = sessionStorage.getItem("difficulty");

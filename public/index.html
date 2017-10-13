@@ -53,16 +53,7 @@
   }
   </style>
 </head>
-<body onload="checkSession()">
-<script>
-    // Redirect back to dashboard if user is already logged in
-    function checkSession() {
-        if (localStorage.getItem("username") !== null) {
-            window.location.href = "/dashboard.html";
-        }
-    }
-</script>
-
+<body>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">

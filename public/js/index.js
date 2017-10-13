@@ -1,3 +1,10 @@
+function checkLoggedIn() {
+    if (localStorage.getItem("username") !== null) {
+        window.location.href = "/dashboard.html";
+    }
+}
+checkLoggedIn();
+
 function logIn(){
     const data = {
         target: 'logIn',
