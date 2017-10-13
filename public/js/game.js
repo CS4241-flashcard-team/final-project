@@ -189,7 +189,9 @@ function displayResult() {
         document.getElementById("no"+ (i+1).toString()).innerHTML = i + 1;
         document.getElementById("img" +(i+1).toString()).innerHTML = "<img src='" + aoq[i].img + "' />";
         document.getElementById("ca"+ (i+1).toString()).innerHTML = aoq[i].answer;
-        document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
+        if (choice[i]) {
+            document.getElementById("ya" + (i + 1).toString()).innerHTML = choice[i];
+        } else document.getElementById("ya" + (i + 1).toString()).innerHTML = "No answer";
         if (aoq[i].answer === choice[i]) {
         } else {
             document.getElementById("tab" + (i+1).toString()).style.backgroundColor = "#ffb3b3";
