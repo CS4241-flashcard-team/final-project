@@ -7,7 +7,7 @@ function initDashboard() {
 function joinCourse(){
     const data = {
         target: 'joinCourse',
-        courseCode: document.getElementById('selectCourse').value,
+        courseCode: document.getElementById('selectCourse').value.substr(0, document.getElementById('selectCourse').value.indexOf(':')),
         username: window.localStorage.getItem('username')
     };
     var xhr = new XMLHttpRequest();
