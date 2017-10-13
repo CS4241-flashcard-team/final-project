@@ -33,7 +33,12 @@ function unameConfirm(){
 function pwdConfirm(){
 	if(document.getElementById("passwordFirst").value == document.getElementById("passwordConf").value){
 		document.getElementById("pwdComp").innerText = "";
-		return true;
+		if(document.getElementById("passwordFirst").value == ""){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 	else{
 		document.getElementById("pwdComp").innerText = "Passwords are different.";
@@ -51,8 +56,17 @@ function imgConfirm() {
     }
 }
 
+function nameConfirm(){
+	if(document.getElementById('signUpFirstName').value == "" || document.getElementById('signUpLastName').value == ""){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
 function signUp(event){
-	if (unameStatus && pwdConfirm() && imgConfirm()) {
+	if (unameStatus && pwdConfirm() && imgConfirm() && nameConfirm()) {
 		event.preventDefault();
 		//pass in everything to be added to db, pwds match and uname is unique
         getS3PutSignedRequest();
