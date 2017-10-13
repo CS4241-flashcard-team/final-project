@@ -1,3 +1,10 @@
+function checkLoggedIn() {
+    if (localStorage.getItem("username") === null) {
+        window.location.href = "/index.html";
+    }
+}
+checkLoggedIn();
+
 //Used for instant display of profile image
 var updatePic = function (event) {
     document.getElementById('profile').src = URL.createObjectURL(event.target.files[0]);
