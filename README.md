@@ -1,98 +1,122 @@
-# cs4241-FinalProject
+# CS4241 Final Project - Memory Flashcard Webapp - Game of Faces
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-This project gives you an opportunity to be creative and to pursue individual research and learning.
+## Members:
+Khuyen Cao, Quyen Hoang, Hung Hong, Hannah Jauris
 
-## General description
+## Overall Description:
+- The user can:
+    - Sign up, login, and update their profile information
+    - Join a course if they are a student or create a course if they are a professor
+    - View all the members of their enrolled course in a yearbook-like page to get to know their classmates or students
+    - Play a multiple choice game with three different levels of difficulties to help with memorizing the names and faces of others in the course.
 
-Your project should consist of a complete Web application. 
-The site must exhibit facets of the three main sections of the course material:
+## Backend implementation:
+### API
+- All requests are documented  in `api.md`, which includes paths, required parameters, optional parameters, and examples
+### Data storage:
+- **Amazon S3**:
+    - Actual images
+- **PostgreSQL**: has 3 tables
+    - users: username (Primary key), password, firstname, lastname, picname, acctype
+    - courses: code (Primary key), name
+    - enrollments: coursecode (Foreign key), username (Foreign key)
+- **Local Storage**:
+    - stores the `username` of the current logged in user
+    - saves when the user has successfully logged in or signed up
+    - clears when the user logs out
+- **Session Storage**:
+    - stores the `coursecode` of the chosen course
+    - saves when the user clicks on the `Play` or `View Class` button
 
-- Static Web page content and design. You should have a project that is well-designed, easily navigable, and exhibits good human-computer interaction.
-- Dynamic behavior implemented with JavaScript and possibly other JavaScript librarires.
-- Server-side programming. Typically this will take the form of some sort of persistent data and possibly server-side computation.
+## How to navigate through the WebApp:
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+###	Main index page:
+- The users can either log in if they already have their accounts or sign up for an account.
+- A simple, overall description of the game is displayed here for people to better understand the functions of this website.
+- Upon clicking Log In, the user enters their Username and password in the pop up form. An alarm message will display if any field is missing or incorrect. If the log in attempt is successful,
+the user will be redirected to his or her account's dashboard.
 
-## Example Projects
+### Sign up:
+- When the user signs up through the sign-up form, they are required to enter a username, password, first and last name, and upload a profile image as well as set the account type (professor or student).
+    - Professor: A “professor” account can modify (add, remove) an available course they are teaching in their personal list.
+    - Student: A “student” account can choose to join from a list of available courses and modify (add, delete) their personal list.
+- As the user types in their username, it is actively checked to ensure that it is a unique username, and a message is displayed alerting them if that username is already taken.
+- Similarly, with the password, there is a password and password confirmation box. Whenever the user enters text into either box, they are checked to ensure they are the same, and a message is displayed if they do not match.
+- When the sign up button is clicked, if any of the fields are not valid (i.e. already taken username, mismatching passwords, empty fields), the submit does not go through. In the case of already taken usernames and mismatching passwords, the color behind the text with the messages alerting the user to the problem changes to highlight the issue until the user provides acceptable input.
+- The user will be redirected to the newly created account's dashboard.
 
-The following list describes a few examples of what I would consider to be good projects. 
-Excellent projects serve someone/some group: define your users and stakeholders. 
-Don't just create a webapp with a pile of features.
-I encourage you to identify projects that will have impact.
+### Your dashboard:
+- If the users have already been enrolled in a course, a list of users' courses will show up in the dashboard. If not, this page is empty.
+- The users can:
+    - Join a course (if the account type is student): choose a course to join from a list of available courses.
+    - Create a course (if the account type is teacher): create a course with name, select from a list of available department, course id, term and year of the course.
+- After joining or creating courses, click-able folders of the course appear with the name of the course underneath. Upon clicking on the folder, the user can choose to view the course catalog or play the game.
+- From the dashboard, you can either sign out or edit your profile in the navigation bar.
 
-Here are some ideas:
+### Edit your profile:
+- Click “Your Profile" in the top navigation bar to go to a page where the users have the option to change their current information.
+- On this page, the user's current information (excepting the password) is displayed for the user to view. Below their information are fields to change their information.
+- To update the password, the user is required to enter their old password, as well as the new password (twice to ensure they spelled it correctly). If the old password is incorrect or the new password does not match the password confirmation, the password will not be updated and messages will be displayed indicating their error.
+- The name fields are pre-filled for user convenience, such as if they only want to change their last name and keep their first name the same. The profile image can be updated by uploading a new image.
+- **Important**: The username and account type cannot be changed.
 
-- Interactive data visualization: Find an interesting dataset, then visualize it using d3.js. See visualizations on the New York Times, 538, or [mbtaviz (wpi grads!)](https://mbtaviz.github.io/) for inspiration.
-    - Server-side components for data visualization could include state-tracking, computation (e.g. machine learning), and many other data-related possibilities.
-- WPI Infrastructure: There are a lot of things that could be done better on the WPI school website. Find something you care about and make a prototype that shows how it could be better. Avoid course schedulers or course survey browsers, as these already exist.
-- (bonus) Infrastructure ideas: Course sizes are growing, making it more difficult than ever for professors to learn about all the students in their course. Create a webapp that provides a better interface to the students in the course (search, filtering, with profiles almost like Facebook) using Banner data. Alternately, create a flash-card game that uses student data (pictures, names) to help professors get to know their students.
+### The course catalog:
+- Display a list of the professor on top and all students underneath with their names. After the user is done viewing the members of the class, clicking the back button at the top of the page navigates to the dashboard.
 
-The above are just a few possibilities.
-Create something useful for a cause or hobby you care about; something that will help you grow as a student.
+### The Game:
+- This is a single player game that creates multiple choice quizzes where the user needs to match the correct picture with name. There will be a timer and numbered questions to keep track of the progress. There are three levels in the game and the timer will be shorter for each level (20, 10, and 5 seconds per question).
+- The result will be displayed at the end with incorrect answers highlighted in red.
+- Click back at the top of the page to be navigated to the dashboard if the user wants to quit or is done with the game.
 
-Also see our [hall of fame](https://cs4241-17a.github.io/fame/), with notable projects from prior offerings of the course.
+###	Sign out:
+- When closing the website and open it back, you will still be automatically logged in. Sign out to return to the home page.
 
-## Logistics
+## FAQ:
+#### What type of image file can I upload to the website?
+Currently, we only support images under .jpg and .png format.
+#### Can I upgrade my account type later after I have created one?
+Unfortunately, there is not an option to update your account type. If you want to switch your role, please create a new profile to have different options.
+#### How many people should there be in a course for me to start playing the game?
+If your courses only have less than 4 members, you cannot play the game. However, you can still view all the members of your course in the course catalog.
 
-### Team size
-Students are encouraged to work in teams of 4-5 students for the project. 
-This will allow you to build a good project without expending an excessive amount of effort. 
-While I would expect a team of four students to produce a project with more features, I expect a single person project to exhibit all of the required facets described above.
+## Technical achievements:
+- **Robust interface**: supports different types of users, in particular student account has the ability to join existing courses, while teacher account has the ability to create new courses for students to join.
+- **3 different game modes**: Easy, Medium, and Hard. Mode can be selected as the user chooses to play the game from one course. The greater the difficulty, the less time the user has for each question.
+- **Game interactive elements**: namely live countdown, sound effects and background music. These elements improve the experience of the user while playing the game and help a lot in making the game fun to play.
+- **4 types of data storage**:
+    - All information regarding courses, students, etc. are retrieved from Postgres Database
+    - Images are uploaded to and retrieved from Amazon S3
+    - Uses session storage for the course catalog and game pages to know which course has been chosen to update the data accordingly.
+    - Uses local storage to retain which user is currently logged in, in order to access personalized information such as course lists or profile information. The username is stored when the user logs in or signs up, and is cleared when the user logs out.
+- **Live input field checking**:
+    - For the sign up page, while the user fills in the fields for the username and password, it is actively checked to make sure the user has not typed in a username already contained within the database, and that the two password fields (password and confirmation) are the same
+    - Similarly, the profile page also has the same checking for passwords, and ensures the old password they entered is correct before updating to the new password.
+- **Game constrains**: The game can only be played if the corresponding course have more than 4 members.
+- **Use of templates**: fill in and update data dynamically using templates
 
-### Deliverables
+## Design achievements:
+- **Sorted data representation**: The courses in the dashboard is sorted by course ID and the names in the class catalog is sorted by lastname.
+- **Consistency**: Create an eye-catching and user-friendly website with consistent color and theme.
+- **Logo**: Little logo of the website that is designed from scratch in Photoshop in the header.
+- **Bootstrap**: to make the site even more eye-catching.
+- **Font choice**: Imported google fonts for the whole webpage.
+- **Automated image carousel**: shown in the index page when you first see the website.
+- **Warning alarms**: pop up when information is missing or incorrect while logging in, signing up, and editing profile.
+- **Pre-filled forms**: pull and display old information (including image) when you choose to edit your profile to be more user friendly
+- **Familiar page behavior**: When profile information is updated, the page jumps back to the top rather than being unresponsive and not moving.
+- **Clickable image buttons**: show a pop up modal onclick with drop-down selection for both “Join course" and “Create course"
+- **Dashboard course folders design**: Add corresponding course name, id, and big red leave button for courses for better user-experience.
+- **Button color scheme choice**: Different colored buttons for three difficulty levels for better user experience.
+- **Yearbook-style format course catalog**:
+    - The professor is displayed bigger on top and students underneath
+    - Every one is presented in a thumbnail, with corresponding full name and profile picture
+- **Back button**: to easily navigate between game, profile, catalog page and the main dashboard.
+- **Sound effects**: to make the game fun to play and elevate game experience.
+- **Highlighted timer**: to draw attention during the game.
+- **Game result display**:
+    - Display results in a table format
+    - Incorrect answers are highlighted in red
+    - Display user's answer and correct answer side by side to help user better memorize their classmates or professor name and face
 
-__Proposal:__ 
-Provide an outline of your project and the names of the team members. 
-The outline should have enough detail so that I can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in.
-
-__Evaluation:__ 
-Conduct an evaluation of your website, with 5 people.
-Sessions should be a minimum of 10 minutes per person.
-Evaluations should be semi-structured: users must perform tasks on their own without your help (i.e., observe only!).
-Allow participants to "think-aloud" to gain insights into what's going on in their mind as they use your site.
-After you've ran participants, analyze and report on your results in evaluation.md.
-A good evaluation will uncover both usability challenges as well as design challenges.
-Submit along with your final code to turn it in.
-
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day. 
-
-#### Turning in Your Outline / Project
-
-Submit a second PR on the final project repo to turn in your outline and code.
-
-Deploy your outline, in the form of a webpage, to Heroku or some other service.
-Ensure that your project has the proper naming scheme (fp-yourGitHubUsername) so we can find it.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
-
-## Final Presentation
-
-Presentations will occur during the final week of class.
-
-As for the presentations, we will take over a different room on WPI's campus, with tables.
-You'll set up and demo to folks who stop by.
-You'll demo to staff as part of your grade.
-
-Naming and URL Scheme
----
-
-You must use a consistent naming scheme for all projects in this course.
-If we can't find it, we can't grade it.
-
-By default Heroku assigns your application a random name.
-To change it, follow [this guide](https://devcenter.heroku.com/articles/renaming-apps).
-
-Only one team member needs to deploy the project on heroku.
-
-The name scheme should be `fp-yourGitHubUsername`. 
-
-## FAQs
-
-- **Can I open-source my project?** You may open source your project after the class ends. 
-I encourage it. While other course code should be kept hidden, this is a case where others can and should learn and draw inspiration from everyone else.
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available.
+## What we used in this project:
+HTML, CSS, Bootstrap, AJAX, JavaScript, jQuery, Postgres
